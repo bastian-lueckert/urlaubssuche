@@ -2,7 +2,23 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.7 – Mehr Vielfalt, "Etwas Ausgefallenes", saubere Wikivoyage-Texte (aktuell)
+## v0.8 – Zielmodus, echte Fahrzeiten, Events, Begründung (aktuell)
+**Erledigt**
+- Footer mit Version und Deploy-Datum. Vor jedem Release wird das Datum eingetragen.
+- Standarddatum: Start in einer Woche, Ende Start + 2 Tage. Vergangene gespeicherte Daten werden auf diesen Standard zurückgesetzt.
+- Maximale Fahrzeit im 0,25-Stunden-Raster (15 Minuten), Anzeige als h:mm.
+- Fahrzeiten geprüft: Statt Luftlinien-Schätzung nutzt die App echte Straßenrouten (OpenStreetMap-Routing, OSRM) für alle Kandidaten plus 10 % Puffer für Verkehr und Pausen. Ziele ohne Straßenverbindung (Inseln) und ungewöhnliche Umwege fallen für das Auto heraus. Bahnzeit wird daraus abgeleitet. Im Test mit 3 h Limit ab Köln lag kein Ergebnis darüber. Beispiel Köln–Heidelberg: 2:53 h, Googles Kartenvorschau zeigt 2 h 54 min.
+- Sehenswürdigkeiten: Städte zeigen nur Orte im Zentrum (Radius 5 km, sortiert nach Bekanntheit und Nähe, Ortsnamen und Stadtteile ausgeschlossen), Regionen bis 25 km mit zwei Suchen (Bauwerke sowie Natur und Freizeit). Die Entfernung vom Zentrum steht dabei. Mehrfache Abrufe werden bei kurzen Ausfällen wiederholt.
+- Veranstaltungen im Reisezeitraum: Feiertage am Zielort (date.nager.at), Feste und Veranstaltungen aus Wikivoyage (Treffer im Reisemonat oben, mit ⭐), Links zu Google Events, Eventim, Ticketmaster und Tourist-Info. Optional Ticketmaster-API für konkrete Konzerte und Events, wenn du einen kostenlosen Schlüssel einträgst (wird nur im Browser gespeichert; noch nicht mit echtem Schlüssel getestet).
+- Kurze Begründung pro Ziel in der Übersichtszeile: "Warum hier?" (passt zu deinen Wünschen, Fahrzeit, Budget) und "Darum lohnt es sich" (Einleitung, Highlights, Wetter, Feiertage). Auch in PDF und Markdown.
+- Neuer Startbildschirm: "Ich habe schon ein Ziel" oder "Ich brauche Ideen". Beim Ziel-Modus gibst du Ort, Stadt oder Region frei ein (Suche über Open-Meteo-Geocoding und Wikipedia), fügst mehrere Ziele hinzu und bekommst dieselbe Ergebnisdarstellung wie beim Brainstorming (Karte, Kosten, Hotels, Sehenswertes, Wikivoyage, Events, Flüge). Die Ziele sind automatisch gemerkt.
+
+**Bekannte Grenzen**
+- "Google-Rückmeldung" zur Fahrzeit: Googles Zeit ist in der eingebetteten Karte sichtbar, lässt sich aber nicht auslesen. Dafür wäre ein Google-API-Schlüssel mit Abrechnung nötig. Die App rechnet stattdessen mit echten OSM-Routen plus Puffer.
+- Konkrete Events (Konzerte, Messen) gibt es ohne Schlüssel nur als Links. Frei nutzbare Event-Schnittstellen ohne Schlüssel existieren kaum. Wikivoyage-Feste haben keine festen Termine.
+- Bei mehrdeutigen Ortsnamen (z. B. "Harz") musst du den passenden Treffer selbst antippen.
+- Wegen echter Routen gibt es bei kleinem Zeitlimit weniger, dafür realistischere Treffer.
+## v0.7 – Mehr Vielfalt, "Etwas Ausgefallenes", saubere Wikivoyage-Texte
 **Erledigt**
 - Neue Option "Etwas Ausgefallenes": Geheimtipps wie Höhlen, Klammen, Wasserfälle, Baumwipfelpfade, Schaubergwerke, Leuchttürme, Burgruinen, Vulkane und Moore. Bei dieser Option werden weniger bekannte Orte bevorzugt, pro Namenstyp (z. B. "Burg") höchstens zwei.
 - Mehr Vielfalt: 
@@ -88,6 +104,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
