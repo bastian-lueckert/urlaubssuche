@@ -2,7 +2,27 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.11 – Staedtetrip planen (aktuell)
+## v0.12 – Schieberegler und Handy-Optimierung (aktuell)
+**Eingaben als Schieberegler**
+- Erwachsene: Regler von 1 bis 4. Darunter ein Knopf "Mehr als 4 Erwachsene?", der ein Eingabefeld bis 40 einblendet; ein zweiter Klick fuehrt zurueck zum Regler.
+- Kinder: genauso, von 0 bis 4 mit demselben Zusatzfeld.
+- Budget: Regler von 100 bis 10.000 Euro in 100er-Schritten, Anzeige als "2.500 €". Daneben der Knopf "Budget egal" – dann steht "egal", der Regler wird blass, und es wird nichts mehr als zu teuer markiert.
+- Hoechste Fahrzeit: Regler in Viertelstunden bis 12 Stunden, Anzeige als "3:15 h".
+- Komfort der Unterkunft: Regler mit drei Stufen (einfach, Mittelklasse, gehoben) statt Auswahlkarten.
+- Jeder Regler zeigt den Wert gross und farbig daneben, dazu die Grenzen unter der Leiste. Der Wert aktualisiert sich beim Schieben sofort.
+- Neu im Schritt Zeitraum: Schnellwahl "Dieses Wochenende", "Naechstes Wochenende", "In 2 Wochen" und "Tagestrip morgen" – setzt Freitag bis Sonntag beziehungsweise den Folgetag.
+
+**Fuer das Handy optimiert**
+- Bedienelemente mindestens 42 bis 44 Pixel hoch, Reglergriff 30 Pixel und damit gut mit dem Daumen zu treffen.
+- Eingabefelder mit 16 Pixel Schrift, damit iPhones beim Antippen nicht mehr hineinzoomen.
+- Unter 600 Pixel Breite: Auswahlkarten einspaltig, kompaktere Kopfzeile und Karten, Schrittleiste mit Einrastpunkten, Knoepfe fuellen die Zeile, kleinere Kartenvorschau (170 statt 220 Pixel), interaktive Karte 300 statt 380 Pixel.
+- Der Startort-Knopf und das Suchfeld nutzen die volle Breite.
+
+**Geprueft bei 375 Pixel Breite**
+- Alle acht Eingabeschritte und die Ergebnisseite: kein seitliches Verschieben, kein Element ragt aus dem Bild, kein Bedienelement unter 40 Pixel Hoehe.
+- Regler: Erwachsene 1 bis 4 und Wechsel auf das Feld mit 9 Personen, Kinder, Budget mit "egal" hin und zurueck, Fahrzeit auf 3:15 h, Komfort auf gehoben.
+- Schnellwahl: alle vier Knoepfe setzen die richtigen Daten (Freitag bis Sonntag beziehungsweise morgen).
+## v0.11 – Staedtetrip planen
 **Neuer Modus "Staedtetrip"**
 - Dritte Moeglichkeit auf dem Startbildschirm. Es werden ausschliesslich Staedte vorgeschlagen, keine Regionen, Gebirge oder Kuestenabschnitte.
 - Reisearten heissen im Staedtemodus passend: Tagestrip, Staedte-Wochenende, Verlaengertes Wochenende, Staedtereise, Lange Staedtereise.
@@ -243,6 +263,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
