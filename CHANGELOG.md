@@ -2,7 +2,34 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.10.2 – Anbieter-Logos in den Listen (aktuell)
+## v0.11 – Staedtetrip planen (aktuell)
+**Neuer Modus "Staedtetrip"**
+- Dritte Moeglichkeit auf dem Startbildschirm. Es werden ausschliesslich Staedte vorgeschlagen, keine Regionen, Gebirge oder Kuestenabschnitte.
+- Reisearten heissen im Staedtemodus passend: Tagestrip, Staedte-Wochenende, Verlaengertes Wochenende, Staedtereise, Lange Staedtereise.
+- Eigene Interessen statt der Urlaubsarten: Altstadt & Sehenswuerdigkeiten, Museen & Kunst, Essen & Ausgehen, Shopping, Events & Kultur, Mit Kindern – und in der Adventszeit zusaetzlich Weihnachtsmarkt.
+- Die Interessen filtern hier nichts weg, sie gewichten nur. Eine Grossstadt faellt also nicht heraus, bloss weil in ihrem Wikipedia-Eintrag zufaellig kein Museum erwaehnt wird.
+- Rangfolge nach Bekanntheit: Live gefundene Orte brauchen deutlich mehr Aufrufe, die Bekanntheit zaehlt dreimal so stark wie sonst, und der Zufallsanteil ist fast abgeschaltet. So stehen echte Staedte oben statt zufaelliger Kleinstaedte.
+- Mindestabstand auf 18 km gesenkt, damit Nachbarstaedte fuer einen Tagestrip nicht herausfallen (ab Koeln z. B. Bonn 0:33 h, Duesseldorf 0:41 h).
+- Weihnachtsmaerkte: Faellt die Reise zwischen den 22. November und den 23. Dezember, werden Staedte mit bekannten Maerkten bevorzugt, es gibt einen Hinweis und einen Link zum Markt.
+- Neu pro Stadt: grober Ablaufvorschlag ueber die Reisetage aus den bekanntesten Sehenswuerdigkeiten, dazu eigene Links fuer Stadtfuehrungen, Museen, Altstadt, Cafes & Bars, City-Card und bei Bedarf Einkaufsstrassen.
+- Wikivoyage liefert im Staedtemodus zusaetzlich den Abschnitt Nachtleben.
+
+**52 neue Staedte im Grundstock** (jetzt 144 kuratierte Ziele)
+- Deutschland: Duesseldorf, Frankfurt, Stuttgart, Hannover, Essen & Ruhrgebiet, Dortmund, Muenster, Aachen, Bonn, Mainz, Freiburg, Wuerzburg, Augsburg, Erfurt, Weimar, Potsdam, Braunschweig, Kiel, Rostock & Warnemuende, Konstanz, Passau.
+- Europa: Bruessel, Antwerpen, Gent, Rotterdam, Utrecht, Zuerich, Basel, Bern, Luzern, Mailand, Venedig, Florenz, Bologna, Verona, Neapel, Madrid, Sevilla, Valencia, Porto, Budapest, Krakau, Warschau, Stockholm, Oslo, Tallinn, Dublin, London, Nizza, Lyon, Ljubljana, Zagreb.
+- Bestehende Grossstaedte wurden um die Merkmale Museen und Events ergaenzt.
+
+**Beim Bauen gefunden und behoben**
+- Grossstaedte fielen aus dem Ergebnis, wenn ihre Merkmale nicht zufaellig zu den gewaehlten Interessen passten (Hannover mit 36.000 Aufrufen fehlte komplett).
+- Kleine Orte standen vor bekannten Staedten, weil die Bekanntheit zu frueh gedeckelt war und der Zufallsanteil ueberwog (Sint-Truiden vor Kassel).
+
+**Geprueft**
+- Staedte-Wochenende ab Koeln: 30 Treffer, alle echte Staedte, oben Essen & Ruhrgebiet, Duesseldorf, Bonn, Heidelberg, Rotterdam, Muenster, Frankfurt – keine Regionen mehr.
+- Adventswochenende: die ersten acht Treffer sind alles Weihnachtsmarktstaedte.
+- Tagestrip mit 2 Stunden Grenze: Essen, Duesseldorf, Muenster, Bonn, Dortmund, Aachen.
+- Ablaufvorschlag, Stadt-Links und Nachtleben erscheinen in der aufgeklappten Karte.
+- Ideen-Modus und Zielmodus unveraendert lauffaehig.
+## v0.10.2 – Anbieter-Logos in den Listen
 **Neu**
 - Jeder Anbieter-Link zeigt jetzt sein Symbol: Booking, Airbnb, Trivago, Check24, Urlaubspiraten, Google (Hotels, Fluege, Events, Karten), Bahn, Skyscanner, Kayak, Outdooractive, Wikipedia, Wikivoyage, OpenStreetMap, Eventim, Ticketmaster.
 - Auch bei den Hotels ("Preis bei Booking pruefen"), den Flugpreis-Links und dem Wikivoyage-Artikel.
@@ -216,6 +243,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
