@@ -2,7 +2,32 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.9.2 – Realistischere Bahn-Zeiten (aktuell)
+## v0.9.3 – Grosse Fehlersuche, Pfeil nach oben (aktuell)
+**Beim Durchtesten gefunden und behoben**
+- **Details blieben haengen:** Ein einziger haengender Abruf blockierte die Warteschlange dauerhaft, danach luden bei keinem Ziel mehr Hotels, Sehenswuerdigkeiten oder Wetter. Jetzt hat jeder Abruf ein Zeitlimit (9 bis 15 Sekunden), jedes Ziel bricht nach 30 Sekunden ab, und Fehler stoppen die Warteschlange nicht mehr.
+- **Schlechte Vorschlaege:** In den Top-15 stand kein einziges kuratiertes Reiseziel, stattdessen beliebige mittelgrosse Staedte, weil mehrfach passende Live-Treffer zu stark belohnt wurden. Jetzt zaehlt der erste Treffer voll, jeder weitere weniger; die Beliebtheit ist gedeckelt, kuratierte Ziele haben mehr Gewicht. Aus Koeln erscheinen nun Trier, Heidelberg, Strassburg, Rothenburg, Luxemburg statt Kaiserslautern, Herford, Recklinghausen.
+- **Ortssuche lieferte falsche Orte zuerst:** "Bamberg" brachte Bamberg in South Carolina an erster Stelle. Sortiert wird jetzt nach Einwohnerzahl und Naehe; die Trefferliste zeigt Region und Einwohner.
+- **Vermischte Orte:** Beim Ziel "Bamberg (USA)" wurde die Beschreibung des deutschen Bamberg uebernommen. Zusatzinfos werden nur noch verwendet, wenn die Koordinaten im Umkreis von 30 km liegen.
+- **Unsinnige Fahrzeit:** Fuer ein Ziel in den USA wurden 26 Stunden Autofahrt angezeigt, weil die Routenberechnung die Koordinaten auf eine europaeische Strasse verschob. Zu kurze Routen gelten jetzt als ungueltig; statt einer Zeit steht "Anreise unklar" mit Hinweis auf Flug oder Faehre.
+- **Wikivoyage-Veranstaltungen fehlten komplett:** Der Parser suchte nur Hauptabschnitte, die Termine stehen aber in Unterabschnitten wie "Regelmaessige Veranstaltungen". Jetzt werden alle Ebenen durchsucht, samt Link. Beispiel Rothenburg: 5 Feste, Muenchen: 7.
+- **Wikipedia sperrte die App zeitweise** (Fehler 429) wegen zu vieler gleichzeitiger Abrufe. Jetzt laufen hoechstens 3 Wikimedia-Abfragen parallel, bei einer Sperre wird automatisch wiederholt. Reisefuehrer-Texte werden erst beim Aufklappen geladen, Vorabdetails nur fuer die ersten 4 Ziele.
+- **Details deutlich schneller:** statt nacheinander laufen die Ziele jetzt parallel, nur die Abfragen mit Limit bleiben seriell. 6 Ziele brauchen rund 22 statt ueber 60 Sekunden, und Inhalte erscheinen, sobald sie da sind.
+- **Klare Rueckmeldung bei Fehlern:** Wenn etwas nicht geladen werden konnte, steht das jetzt in der Karte, mit Knopf "Live-Infos erneut laden" beziehungsweise "Erneut versuchen" beim Reisefuehrer.
+
+**Neu**
+- Pfeil nach oben neben dem Stern: erscheint, sobald man mehr als 300 Pixel gescrollt hat, und springt zum Seitenanfang. Er ist auf allen Schritten verfuegbar, der Stern weiterhin nur auf der Ergebnisseite.
+
+**Geprueft**
+- Kompletter Ideen-Weg per Klick: Start, Ortssuche, Personen, Zeitraum, Budget, Anreise mit 15-Minuten-Raster, Art des Urlaubs, Unterkunft, Ergebnis. Kein Ziel ueberschritt die eingestellte Fahrzeit.
+- Zielmodus mit Bamberg: Bahn 3:32 h, echte Sehenswuerdigkeiten (Dom, Altes Rathaus, Bamberger Reiter), Hotels, Restaurants, Reisefuehrer, Wetter, Karte mit 21 Markierungen.
+- Knoepfe Neu mischen, Mehr Ideen, Alle auf- und zuklappen, Merken, Favoritenliste, Entfernen, Sprung zur Zusammenfassung, Zusatzkosten, Markdown- und PDF-Inhalt, Hell/Dunkel, Speichern und Laden, Tagesausflug, Flugmodus.
+- Ansicht bei Handybreite (375 Pixel).
+
+**Weiterhin offen**
+- Preise bleiben Schaetzungen; Bahnzeiten sind ein Modell, nicht der echte Fahrplan.
+- Der PDF-Druckdialog selbst wurde nicht ausgeloest, nur der erzeugte Inhalt geprueft.
+- Echtes GPS konnte nur simuliert getestet werden.
+## v0.9.2 – Realistischere Bahn-Zeiten
 **Erledigt**
 - Bahnzeiten neu berechnet: Statt Autozeit x 1,15 gibt es ein Streckenmodell mit 87 Fernverkehrsknoten. Es rechnet Weg zum Bahnhof, Fahrt zwischen den Knoten (je nach Entfernung 85 bis 125 km/h im Schnitt inkl. Halte), Umstiege (0,25 h) und den Weg vom Zielbahnhof zum Ziel. Ziele an Nebenstrecken, mit Fähre oder Auslandsverbindungen bekommen Zuschläge (z. B. Sylt, Rügen, Kopenhagen, Prag, Wien).
 - Abgleich mit ungefähren Erfahrungswerten ab Köln (nicht mit einer Fahrplanabfrage geprüft): Berlin 4:50 h, München 4:39 h, Hamburg 4:04 h, Amsterdam 3:00 h, Heidelberg 2:58 h, Sylt 7:07 h, Rügen 7:32 h, Kopenhagen ca. 9 h.
@@ -129,6 +154,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
