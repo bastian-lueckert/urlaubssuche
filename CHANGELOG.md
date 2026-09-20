@@ -2,7 +2,18 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.9.1 – Startort ohne Vorbelegung (aktuell)
+## v0.9.2 – Realistischere Bahn-Zeiten (aktuell)
+**Erledigt**
+- Bahnzeiten neu berechnet: Statt Autozeit x 1,15 gibt es ein Streckenmodell mit 87 Fernverkehrsknoten. Es rechnet Weg zum Bahnhof, Fahrt zwischen den Knoten (je nach Entfernung 85 bis 125 km/h im Schnitt inkl. Halte), Umstiege (0,25 h) und den Weg vom Zielbahnhof zum Ziel. Ziele an Nebenstrecken, mit Fähre oder Auslandsverbindungen bekommen Zuschläge (z. B. Sylt, Rügen, Kopenhagen, Prag, Wien).
+- Abgleich mit ungefähren Erfahrungswerten ab Köln (nicht mit einer Fahrplanabfrage geprüft): Berlin 4:50 h, München 4:39 h, Hamburg 4:04 h, Amsterdam 3:00 h, Heidelberg 2:58 h, Sylt 7:07 h, Rügen 7:32 h, Kopenhagen ca. 9 h.
+- Anzeige: Bahn-Zeiten sind als "ca." gekennzeichnet, dazu Zahl der Umstiege; in den Details steht, dass es eine Schätzung ist, mit Link zu Bahn.de (Start und Ziel vorbelegt) und Hinweis auf die Google-Karte mit der echten ÖPNV-Verbindung.
+- Bahnpreis: aus der Streckenlänge (ca. 0,13 €/km, mindestens 15 € pro Person und Richtung), Kinder zum halben Preis.
+- Bahn nur bis ca. 1100 km Luftlinie, Ziele ohne Straßenverbindung (Inseln) und ohne Bahnhof im Umkreis von 80 km entfallen.
+- Optional eingebaut: echte Verbindung (Zeit, Umstiege, Preis) über die DB-Schnittstelle transport.rest. Der Dienst war beim Test nicht erreichbar (Fehler 503), dieser Teil ist deshalb ungetestet. Bei Erfolg ersetzt die echte Zeit die Schätzung.
+
+**Bekannte Grenzen**
+- Ohne erreichbare Fahrplanschnittstelle bleibt die Bahnzeit eine Schätzung mit typisch etwa +/- 30 Minuten (bei Nebenstrecken mehr). Exakte Verbindungen zeigt Bahn.de über den Link.
+## v0.9.1 – Startort ohne Vorbelegung
 **Erledigt**
 - Keine Vorbelegung mit Köln mehr. Der Startort wird beim Öffnen des Schritts "Wer & von wo" automatisch per GPS versucht (der Browser fragt nach Erlaubnis). Klappt das nicht, gibst du deinen Ort ein: Suche mit Trefferliste (z. B. mehrere Orte mit gleichem Namen), Auswahl per Antippen. Ein Knopf startet die GPS-Ermittlung auch manuell.
 - Der Ortsname zum GPS-Standort wird per Rückwärtssuche ermittelt und angezeigt.
@@ -118,6 +129,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
