@@ -2,7 +2,13 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.9 – Schlanker Kopf und Favoriten-Pille für Mobilgeräte (aktuell)
+## v0.9.1 – Startort ohne Vorbelegung (aktuell)
+**Erledigt**
+- Keine Vorbelegung mit Köln mehr. Der Startort wird beim Öffnen des Schritts "Wer & von wo" automatisch per GPS versucht (der Browser fragt nach Erlaubnis). Klappt das nicht, gibst du deinen Ort ein: Suche mit Trefferliste (z. B. mehrere Orte mit gleichem Namen), Auswahl per Antippen. Ein Knopf startet die GPS-Ermittlung auch manuell.
+- Der Ortsname zum GPS-Standort wird per Rückwärtssuche ermittelt und angezeigt.
+- Ohne Startort geht es nicht weiter: "Weiter" und Sprünge über die Schrittleiste führen zurück zum Startort-Schritt. Gespeicherte Stände aus älteren Versionen (mit Köln) verlangen den Startort einmal neu.
+- Getestet: Suche und Auswahl per Klick, Sperre beim Weiterklicken, GPS-Ablauf mit simuliertem Standort (echtes GPS im Browser-Test nicht möglich).
+## v0.9 – Schlanker Kopf und Favoriten-Pille für Mobilgeräte
 **Erledigt**
 - Kopfzeile: Speichern und Laden liegen jetzt in einem Burger-Menü (☰). Neustart ist ein Symbol (↺), ebenso der Hell/Dunkel-Schalter (🌙/☀️). Auf dem Handy bleibt alles in einer Zeile, der Untertitel wird dort ausgeblendet.
 - Favoriten: Statt der breiten Leiste unten gibt es eine kleine Pille mit Stern und Zahl (⭐ 2) unten rechts. Ein Klick klappt die Liste der gemerkten Ziele mit Fahrzeit und Preis auf, einzelne Ziele lassen sich entfernen, und ein Knopf führt zur Zusammenfassung. Die Pille erscheint nur auf der Ergebnisseite.
@@ -112,6 +118,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
