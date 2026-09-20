@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Urlaubssuche</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230a8a84'/%3E%3Ccircle cx='40' cy='24' r='9' fill='%23fbbf24'/%3E%3Cpath d='M6 44 22 26l9 11 9-7 18 14z' fill='%23fff'/%3E%3Cpath d='M6 46q13-6 26 0t26 0v6q-13 6-26 0T6 52z' fill='%235eead4'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("urlaubssuche.theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{--bg:#f2f5f8;--card:#fff;--ink:#1a2433;--mute:#62708a;--line:#e0e6ee;--acc:#0a8a84;--acc2:#e3f5f3;--warn:#c2410c;--ok:#15803d;--sun:#f59e0b;--hero1:#0a8a84;--hero2:#1d5fa8;--shadow:0 2px 10px rgba(20,40,70,.07)}
+:root[data-theme=dark]{--bg:#0e131a;--card:#171e29;--ink:#e8edf4;--mute:#96a3b8;--line:#28323f;--acc:#3ec9bf;--acc2:#15322f;--warn:#fb923c;--ok:#4ade80;--sun:#fbbf24;--hero1:#0b4f55;--hero2:#14345f;--shadow:0 2px 12px rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+html{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;transition:background .2s,color .2s}
+header{padding:12px 16px;background:linear-gradient(120deg,var(--hero1),var(--hero2));color:#fff;display:flex;gap:10px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 14px rgba(0,0,0,.18)}
+header .brand{display:flex;align-items:center;gap:10px;flex:1;min-width:200px}
+header h1{font-size:20px;margin:0;letter-spacing:.3px;line-height:1.1}
+header .tag2{font-size:12px;opacity:.85;display:block;font-weight:400}
+header .btn{background:rgba(255,255,255,.14)!important;color:#fff!important;border-color:rgba(255,255,255,.3)!important;font-size:14px;padding:7px 12px!important}
+header .btn:hover{background:rgba(255,255,255,.26)!important}
+.dest{transition:box-shadow .2s,transform .2s}.dest:hover{box-shadow:0 6px 22px rgba(20,40,70,.14)}
+.dest img{border-radius:12px}
+a{color:var(--acc)}
+main{max-width:920px;margin:0 auto;padding:16px}
+.steps{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}
+.steps button{white-space:nowrap;font-size:13px;padding:6px 10px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--mute);cursor:pointer}
+.steps button.done{color:var(--acc);border-color:var(--acc)}
+.steps button.cur{background:var(--acc);color:#fff;border-color:var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}
+h2{margin:0 0 4px;font-size:20px}h3{margin:14px 0 6px;font-size:16px}
+.sub{color:var(--mute);margin:0 0 14px;font-size:14px}
+label{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;width:100%}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.opt{border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:var(--bg);user-select:none}
+.opt.on{border-color:var(--acc);background:var(--acc2)}
+.opt b{display:block}.opt span{font-size:13px;color:var(--mute)}
+.nav{display:flex;gap:8px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
+button.btn{font:inherit;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tag{display:inline-block;font-size:12px;background:var(--acc2);color:var(--acc);border-radius:99px;padding:2px 8px;margin:0 4px 4px 0}
+.info{background:var(--acc2);border-radius:10px;padding:8px 12px;font-size:14px;margin-top:10px}
+.dest h3{margin:0}.dest .meta{color:var(--mute);font-size:14px}
+.cost{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+.cost td{padding:3px 0;border-bottom:1px dashed var(--line)}.cost td:last-child{text-align:right;white-space:nowrap}
+.cost tr.t td{font-weight:700;border-bottom:0}
+.over{color:var(--warn);font-weight:600}.fine{color:var(--ok);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.links a{font-size:13px;padding:5px 9px;border:1px solid var(--line);border-radius:8px;color:var(--acc);text-decoration:none}
+.small{font-size:13px;color:var(--mute)}
+.notice{background:#fff7e0;border:1px solid #f2c94c;color:#5c4400;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+:root[data-theme=dark] .notice{background:#3a2f0b;border-color:#8a6d1a;color:#ffe9a8}
+.sumrow{display:flex;gap:14px;align-items:stretch;cursor:pointer;flex-wrap:wrap}
+.mapph{flex:0 0 220px;height:150px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--bg)}
+.mapph iframe{width:100%;height:100%;border:0;pointer-events:none}
+.sumtxt{flex:1;min-width:200px}.sumtxt h3{margin:0 0 2px}
+.sumprice{margin:4px 0}
+.favb{align-self:flex-start;white-space:nowrap}
+.body{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}.body[hidden]{display:none}
+.bigmap{height:380px;border-radius:12px;overflow:hidden;border:1px solid var(--line);margin:6px 0;background:var(--bg);z-index:0}
+:root[data-theme=dark] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.9)}
+.legend{margin-bottom:8px}
+.stickybar{position:sticky;bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--acc);border-radius:14px;padding:10px 14px;box-shadow:0 6px 22px rgba(0,0,0,.2)}
+@media(max-width:560px){.mapph{flex:1 1 100%}}#print{display:none}
+@media print{@page{size:A4;margin:14mm}body>*:not(#print){display:none!important}html,body{background:#fff!important}#print{display:block;color:#1a2433;background:#fff;font-size:11pt;line-height:1.45}
+.pr-head{display:flex;align-items:center;gap:12px;border-bottom:3px solid #0a8a84;padding-bottom:8px;margin-bottom:10px}.pr-head h1{margin:0;font-size:22pt;color:#0a8a84}.pr-head small{color:#62708a}
+.pr-meta{background:#eef7f6;border-radius:8px;padding:8px 12px;margin-bottom:12px}
+.pr-tbl{width:100%;border-collapse:collapse;margin:6px 0 10px}.pr-tbl td,.pr-tbl th{padding:4px 6px;border-bottom:1px solid #dfe3e9;text-align:left;font-size:10pt}.pr-tbl td:last-child,.pr-tbl th:last-child{text-align:right}
+.pr-dest{page-break-inside:avoid;break-inside:avoid;border:1px solid #cfd8e3;border-radius:10px;padding:10px 12px;margin:0 0 12px}
+.pr-dest h2{margin:0 0 2px;font-size:15pt;color:#0a8a84}.pr-dest h3{margin:8px 0 3px;font-size:11pt}
+.pr-dest img.ph{width:100%;max-height:60mm;object-fit:cover;border-radius:8px;margin:4px 0}
+.pr-dest .sm{font-size:9.5pt;color:#4a566b}.pr-dest a{color:#0a6fa8;text-decoration:none}
+.pr-total{font-size:13pt;font-weight:700;text-align:right;margin-top:4px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="46" height="46" viewBox="0 0 64 64" aria-label="Logo">
+      <defs><linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+      <linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5eead4"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+      <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,.16)" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="40" cy="24" r="9" fill="url(#lg1)"/>
+      <path d="M6 44 L22 26 L31 37 L40 30 L58 44 Z" fill="#fff" fill-opacity=".92"/>
+      <path d="M6 46 Q19 40 32 46 T58 46 V52 Q45 58 32 52 T6 52 Z" fill="url(#lg2)"/>
+      <path d="M32 6 L34.4 13 H29.6 Z" fill="#fff"/>
+    </svg>
+    <div><h1>Urlaubssuche</h1><span class="tag2">Finde dein nächstes Ziel</span></div>
+  </div>
+  <button class="btn" id="bTheme" title="Hell/Dunkel umschalten">🌙 Dunkel</button>
+  <button class="btn" id="bSave">Speichern</button>
+  <label class="btn" style="margin:0">Laden<input type="file" id="fLoad" accept=".json" hidden></label>
+  <button class="btn" id="bReset">Neu starten</button>
+</header>
+<main>
+  <div class="steps" id="steps"></div>
+  <div id="view"></div>
+</main>
+<div id="print"></div>
+
+<script>
+"use strict";
+/* ---------- Daten ---------- */
+const HOMES={"Berlin":[52.52,13.40],"Hamburg":[53.55,9.99],"München":[48.14,11.58],"Köln":[50.94,6.96],"Frankfurt":[50.11,8.68],"Stuttgart":[48.78,9.18],"Düsseldorf":[51.23,6.78],"Leipzig":[51.34,12.37],"Hannover":[52.37,9.73],"Nürnberg":[49.45,11.08],"Dresden":[51.05,13.74],"Bremen":[53.08,8.80]};
+// [Name, Land, lat, lon, Tags, €/Erw./Nacht (Unterkunft+Essen+Aktivitäten, Mittelklasse), Sehenswertes, Küche]
+// Tags: st Stadt, na Natur/Landschaft, we Wellness, wa Wandern, ra Rad, me Meer, be Berge, in Insel, ku Kultur/Sightseeing, re Relaxen, wm warm
+const D=[
+["Hamburg","DE",53.55,9.99,"st ku sh",110,["Elbphilharmonie Plaza","Speicherstadt","Hafencity & Landungsbrücken"],"Fischbrötchen, Hafenküche"],
+["Berlin","DE",52.52,13.40,"st ku sh",105,["Museumsinsel","Brandenburger Tor","East Side Gallery"],"Currywurst, Streetfood, Internationales"],
+["München","DE",48.14,11.58,"st ku sh fo",125,["Marienplatz","Englischer Garten","Deutsches Museum"],"Bayerische Wirtshäuser, Biergärten"],
+["Dresden","DE",51.05,13.74,"st ku",95,["Frauenkirche","Zwinger","Brühlsche Terrasse"],"Sächsische Küche"],
+["Leipzig","DE",51.34,12.37,"st ku",90,["Thomaskirche","Völkerschlachtdenkmal","Spinnerei"],"Kneipenviertel, Café-Kultur"],
+["Köln","DE",50.94,6.96,"st ku sh",100,["Kölner Dom","Rheinpromenade","Schokoladenmuseum"],"Kölsch-Brauhäuser"],
+["Nürnberg","DE",49.45,11.08,"st ku",95,["Kaiserburg","Altstadt","Dokuzentrum"],"Bratwurst, fränkische Küche"],
+["Heidelberg","DE",49.40,8.69,"st ku na",105,["Schloss Heidelberg","Philosophenweg","Alte Brücke"],"Studentenlokale, Neckarterrassen"],
+["Rügen","DE",54.42,13.40,"me na ra wa re fa",100,["Kreidefelsen","Binz Seebrücke","Jasmund Nationalpark"],"Fisch, Sanddorn-Spezialitäten"],
+["Usedom","DE",53.95,14.05,"me re ra we",100,["Kaiserbäder","Seebrücke Ahlbeck","Achterwasser"],"Räucherfisch, Strandcafés"],
+["Sylt","DE",54.90,8.32,"me na re we",190,["Kampen & Roter Kliff","Lister Ellenbogen","Wattenmeer"],"Austern, Fisch, Gehobenes"],
+["Sächsische Schweiz","DE",50.91,14.07,"na wa be",85,["Bastei","Kuhstall","Festung Königstein"],"Gasthäuser, Bergbaude"],
+["Harz","DE",51.80,10.62,"na wa we sk fa",85,["Brocken","Wernigerode","Rappbodetalsperre"],"Harzer Küche, Hütten"],
+["Schwarzwald","DE",48.05,8.20,"na wa we re sk fa",100,["Triberger Wasserfälle","Titisee","Schauinsland"],"Schwarzwälder Kirschtorte, Vesper"],
+["Allgäu","DE",47.57,10.28,"be wa na we sk fa",115,["Neuschwanstein","Oberstdorf","Breitachklamm"],"Käsespätzle, Alpwirtschaften"],
+["Berchtesgaden","DE",47.63,13.00,"be wa na sk",115,["Königssee","Watzmann","Kehlsteinhaus"],"Bayerische Küche, Almen"],
+["Moseltal","DE",49.95,7.05,"ra na wa fo",95,["Cochem","Burg Eltz","Weinberge"],"Weinstuben, Riesling"],
+["Bodensee","DE",47.65,9.30,"ra na re we",110,["Insel Mainau","Meersburg","Lindau"],"Felchen, Seerestaurants"],
+["Norderney","DE",53.71,7.15,"me in re",115,["Strandpromenade","Nordstrand","Wattwanderung"],"Nordseefisch"],
+["Prag","CZ",50.08,14.43,"st ku",80,["Karlsbrücke","Prager Burg","Altstädter Ring"],"Böhmische Küche, Bier"],
+["Wien","AT",48.21,16.37,"st ku fo sh",115,["Schönbrunn","Stephansdom","Naschmarkt"],"Kaffeehäuser, Schnitzel"],
+["Amsterdam","NL",52.37,4.90,"st ku ra sh",140,["Grachten","Rijksmuseum","Anne-Frank-Haus"],"Indonesisch, Streetfood"],
+["Kopenhagen","DK",55.68,12.57,"st ku sh fo",160,["Nyhavn","Tivoli","Design Museum"],"Smørrebrød, Nordic Cuisine"],
+["Dolomiten / Südtirol","IT",46.50,11.35,"be wa we fo sk",125,["Seiser Alm","Drei Zinnen","Bozen"],"Südtiroler Hütten, Speck & Knödel"],
+["Gardasee","IT",45.60,10.70,"na re wa ra wm",115,["Sirmione","Malcesine","Limone"],"Italienisch am See"],
+["Toskana","IT",43.40,11.20,"na ku re ra wm fo",120,["Florenz","Siena","Val d'Orcia"],"Toskanische Küche, Weingüter"],
+["Rom","IT",41.90,12.50,"st ku wm fo",120,["Kolosseum","Vatikan","Trevi-Brunnen"],"Trattorien, Pasta & Pizza"],
+["Istrien (Kroatien)","HR",45.20,13.90,"me ku re wm",100,["Rovinj","Pula Arena","Motovun"],"Fisch, Trüffel"],
+["Lissabon","PT",38.72,-9.14,"st ku me wm fo",105,["Belém","Alfama","Tram 28"],"Petiscos, Pastel de Nata"],
+["Algarve","PT",37.10,-8.20,"me re wm",105,["Ponta da Piedade","Benagil-Höhle","Lagos"],"Grillfisch, Cataplana"],
+["Barcelona","ES",41.39,2.17,"st ku me wm sh fo",115,["Sagrada Família","Park Güell","Barri Gòtic"],"Tapas, Paella"],
+["Mallorca","ES",39.70,3.00,"in me re wm ra",115,["Palma Kathedrale","Serra de Tramuntana","Cala-Buchten"],"Tapas, Meeresfrüchte"],
+["Teneriffa","ES",28.29,-16.63,"in me re wa wm",100,["Teide","Masca-Schlucht","Loro Parque"],"Kanarische Küche, Papas arrugadas"],
+["Kreta","GR",35.24,25.15,"in me re ku wm",100,["Knossos","Samaria-Schlucht","Elafonisi"],"Tavernen, Meze"],
+["Antalya","TR",36.90,30.70,"me re ku wm",85,["Altstadt Kaleiçi","Düden-Wasserfälle","Termessos"],"Türkische Küche, Meze"],
+["Europa-Park (Rust)","DE",48.27,7.72,"fa na",120,["Europa-Park","Rulantica Wasserwelt","Rhein & Vogesen"],"Themenrestaurants, badische Küche"],
+["Phantasialand (Brühl)","DE",50.80,6.88,"fa",100,["Phantasialand","Schloss Augustusburg","Rheinaue"],"Freizeitpark-Gastronomie"],
+["Heide Park (Soltau)","DE",53.00,9.87,"fa na",95,["Heide Park Resort","Lüneburger Heide","Vogelpark Walsrode"],"Heidschnucken, Heidegasthöfe"],
+["Winterberg","DE",51.19,8.53,"sk wa be na",95,["Skiliftkarussell","Kahler Asten","Rothaarsteig"],"Sauerländer Gasthäuser, Hütten"],
+["Garmisch-Partenkirchen","DE",47.49,11.10,"sk be wa na we",125,["Zugspitze","Partnachklamm","Eibsee"],"Bayerische Küche, Berghütten"],
+["Roermond (Designer Outlet)","NL",51.19,5.99,"sh st",95,["Designer Outlet Roermond","Altstadt Roermond","Munsterplein"],"Café-Kultur, niederländische Küche"],
+["Metzingen (Outlet-Stadt)","DE",48.54,9.29,"sh",90,["Outletcity Metzingen","Schwäbische Alb","Weinberge"],"Schwäbische Küche"],["Norwegische Fjorde","NO",61.00,6.00,"na wa be",170,["Geirangerfjord","Trolltunga","Flåmsbana"],"Lachs, Fischsuppe"]
+].map(a=>({name:a[0],c:a[1],lat:a[2],lon:a[3],tags:a[4].split(" "),pn:a[5],sights:a[6],food:a[7]}));
+
+const MOODS={
+ short:[["st","Stadt","Bummeln, Kultur, Essen"],["na","Landschaft / Natur","raus ins Grüne"],["wa","Wandern","Touren vor Ort"],["we","Wellness","Therme, Spa"],["ra","Radtour","Radwege entlang Fluss/See"],["sh","Shopping","Einkaufsstädte, Outlets"],["fo","Kulinarik & Genuss","Essen, Wein, Regionales"],["fa","Familie & Freizeitparks","Zoo, Erlebnispark, Kinderprogramm"],["sk","Wintersport","Ski, Rodeln, Winterlandschaft"]],
+ long:[["re","Relaxen","Strand, Pool, nichts tun"],["ku","Sightseeing","Kultur & Sehenswürdigkeiten"],["wa","Wandern","aktiv unterwegs"],["ra","Radtour","aktiv auf dem Rad"],["st","Städtetrip","Stadt als Schwerpunkt"],["sh","Shopping","Einkaufsstädte, Outlets"],["fo","Kulinarik & Genuss","Essen, Wein, Regionales"],["fa","Familie & Freizeitparks","Zoo, Erlebnispark, Kinderprogramm"],["sk","Wintersport","Ski, Rodeln, Winterlandschaft"]]
+};
+const REGIONS=[["me","Meer / Strand"],["be","Berge"],["in","Inseln"],["st","Städte"],["wm","Sicher warm (Sonne)"]];
+const TYPES={ta:"Tagesausflug",we:"Wochenende",vw:"Verlängertes Wochenende",wo:"Urlaub (ca. 1 Woche)",lg:"Langurlaub (10+ Nächte)"};
+
+/* ---------- State ---------- */
+const KEY="urlaubssuche.v1";
+const fresh=()=>({step:0,a:{adults:2,kids:0,homeName:"Köln",lat:50.94,lon:6.96,from:"",to:"",type:"",budget:0,modes:["car","train"],maxH:0,moods:[],regions:[],lodging:"any",comfort:"mid",kidsOk:false},favs:[],extras:[]});
+let S=load();
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.a)return Object.assign(fresh(),s,{a:Object.assign(fresh().a,s.a)})}catch(e){}return fresh()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ---------- Ableitungen ---------- */
+const A=()=>S.a;
+function nights(){const a=A();if(!a.from||!a.to)return 0;return Math.max(0,Math.round((new Date(a.to)-new Date(a.from))/864e5))}
+function autoType(){const n=nights();if(A().from&&A().to&&n===0)return "ta";if(!n)return "";return n<=2?"we":n<=4?"vw":n<=9?"wo":"lg"}
+function type(){return A().type||autoType()||"vw"}
+const isShort=()=>["ta","we","vw"].includes(type());
+const nn=()=>type()==="ta"?0:(nights()||({we:2,vw:3,wo:7,lg:12})[type()]);
+const nl=n=>n?`${n} N.`:"1 Tag";
+function maxH(){const a=A();return a.maxH||({ta:2,we:3,vw:5,wo:9,lg:14})[type()]}
+function km(a,b,c,d){const R=6371,r=x=>x*Math.PI/180,dl=r(c-a),dn=r(d-b);const h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+const eur=x=>Math.round(x/5)*5;
+const fmt=x=>eur(x).toLocaleString("de-DE")+" €";
+
+/* ---------- Live-Suche (Wikipedia, Open-Meteo, OpenStreetMap/Nominatim) ---------- */
+const WIKI="https://de.wikipedia.org/w/api.php";
+const Q={st:"Altstadt OR Großstadt OR Stadtzentrum",ku:"UNESCO-Welterbe OR Altstadt OR Sehenswürdigkeiten",na:"Nationalpark OR Naturpark OR Biosphärenreservat",wa:"Wandergebiet OR Mittelgebirge OR Wanderweg",we:"Thermalbad OR Kurort OR Heilbad",ra:"Radfernweg OR Flusstal OR Radweg",me:"Ostseebad OR Nordseebad OR Badeort OR Küstenort",be:"Alpen OR Skigebiet OR Gebirge",in:"Insel OR Urlaubsinsel",re:"Badeort OR Erholungsort OR Luftkurort",wm:"Mittelmeer OR Badeort OR Strand",sh:"Einkaufsstadt OR Einkaufsstraße OR Outlet OR Einkaufszentrum OR Shoppingcenter",fo:"Weinbaugebiet OR Weinort OR Genussregion OR Gastronomie OR Feinschmecker",fa:"Freizeitpark OR Erlebnispark OR Tierpark OR Zoo OR Familienurlaub",sk:"Skigebiet OR Wintersportort OR Wintersport"};
+const qcache=new Map();
+const LIVE={key:"",list:[],busy:false,err:""};
+const DET={};
+function priceFor(lat,lon){if(lat>56)return 150;if(lat<44)return 100;if(lat>47.2&&lat<55.1&&lon>5.9&&lon<15.1)return 100;return 115}
+async function wikiSearch(search,limit,extra){
+  const p=new URLSearchParams(Object.assign({action:"query",format:"json",origin:"*",generator:"search",gsrsearch:search,gsrlimit:String(limit),gsrnamespace:"0",prop:"coordinates|pageimages|extracts|pageviews|description",coprimary:"primary",colimit:"50",piprop:"thumbnail",pithumbsize:"500",pilimit:"50",exintro:"1",explaintext:"1",exsentences:"2",exlimit:"20",pvipdays:"30"},extra||{}));
+  const r=await fetch(WIKI+"?"+p);if(!r.ok)throw new Error("Wikipedia "+r.status);
+  const j=await r.json();
+  return Object.values((j.query&&j.query.pages)||{}).filter(x=>x.coordinates&&!/^(Liste|Bahnhof|Kategorie)|Begriffsklärung/.test(x.title)).map(x=>({
+    title:x.title,lat:x.coordinates[0].lat,lon:x.coordinates[0].lon,
+    pv:x.pageviews?Object.values(x.pageviews).reduce((a,b)=>a+(b||0),0):0,
+    img:x.thumbnail&&!BADIMG.test(decodeURIComponent(x.thumbnail.source))?x.thumbnail.source:"",extract:x.extract||"",desc:x.description||""}));
+}
+// Filter: nur echte Urlaubsorte/Landschaften, keine Gebäude, Vereine, Bahnhöfe usw.
+const PLACE=/Stadt|Gemeinde|Insel|Gebirge|Nationalpark|Naturpark|Ortsteil|Kurort|Seebad|Region|Landschaft|Tal\b|See\b|Küste|Gebiet|Ortschaft|Dorf|Berg\b|Skigebiet|Halbinsel|Mittelgebirge|Höhenzug|Weinbau|Biosphären|Heilbad|Badeort|Ferienort|Stadtteil|Archipel|Bucht|Strand|Fjord|Municipality|commune|comune|city|town|island|resort/i;
+const BAD=/Halle\b|Bahnhof|Stadion|Schule|Gymnasium|Kaserne|Hochschule|Universität|Krankenhaus|Brücke|Flughafen|Zeche|Sender|Verein|Kirche|Schloss\b|Burg\b|Museum|Kloster|Bahnstrecke|Autobahn|Kraftwerk|Unternehmen|Politiker|Fußball|Radiosender|römisch|Kastell|Ortsgemeinde in der Verbandsgemeinde/i;
+const BADIMG=/wappen|coat_of|flag|flagge|logo|siegel|karte|map|\.svg/i;
+const SMALL=/Stadtbezirk|Stadtteil|Ortsteil|Ortschaft|Dorf|Gemeindeteil|Weiler/i;
+function goodPlace(c){
+  const d=c.desc||"";
+  if(BAD.test(d)||/^(Liste|Bahnhof)/.test(c.title))return false;
+  if(!d)return PLACE.test(c.extract.slice(0,200))&&c.pv>=300;
+  if(!PLACE.test(d))return false;
+  if(SMALL.test(d)&&c.pv<1500)return false;
+  return c.pv>=150;
+}
+async function queryTag(tag,radius){
+  const a=A(),k=[tag,radius,a.lat.toFixed(2),a.lon.toFixed(2)].join("|");
+  if(qcache.has(k))return qcache.get(k);
+  const res=await wikiSearch(`nearcoord:${radius}km,${a.lat},${a.lon} ${Q[tag]}`,50);
+  const out=res.map(x=>({...x,tag})); qcache.set(k,out); return out;
+}
+function liveKey(){const a=A();return JSON.stringify([a.lat,a.lon,maxH(),a.moods,a.regions,a.modes,type()])}
+async function discover(){
+  const a=A(),key=liveKey();
+  LIVE.busy=true;LIVE.err="";
+  let tags=[...new Set([...a.moods,...a.regions])].filter(t=>Q[t]);
+  if(!tags.length)tags=["st","na","me"];
+  const flight=a.modes.includes("flight")&&!isShort();
+  const radius=Math.min(1000,flight?1000:Math.max(50,Math.round(maxH()*68)));
+  try{
+    const all=(await Promise.allSettled(tags.map(t=>queryTag(t,radius)))).flatMap(r=>r.status==="fulfilled"?r.value:[]);
+    // gleiche Orte zusammenführen, Cluster (<20 km) auf den beliebtesten Ort reduzieren
+    all.sort((x,y)=>y.pv-x.pv);
+    const kept=[];
+    for(const c of all){
+      if(!goodPlace(c))continue;
+      const near=kept.find(k=>km(k.lat,k.lon,c.lat,c.lon)<20);
+      if(near){if(!near.tags.includes(c.tag))near.tags.push(c.tag);continue}
+      const tg=[c.tag], txt=c.title+" "+c.extract;
+      if(/Insel/.test(txt)&&!tg.includes("in"))tg.push("in");
+      if(/Nordsee|Ostsee|Strand|Küste|Mittelmeer|Atlantik/.test(txt)&&!tg.includes("me"))tg.push("me");
+      if(/Alpen|Gebirge/.test(txt)&&!tg.includes("be"))tg.push("be");
+      if(c.lat<44&&!tg.includes("wm"))tg.push("wm");
+      kept.push({name:c.title,q:c.title.replace(/\s*\(.*\)/,""),c:"",lat:c.lat,lon:c.lon,tags:tg,pn:priceFor(c.lat,c.lon),sights:[],food:"",live:true,pv:c.pv,img:c.img,extract:c.extract,desc:c.desc,url:"https://de.wikipedia.org/wiki/"+encodeURIComponent(c.title.replace(/ /g,"_"))});
+    }
+    // kuratierte Ziele haben Vorrang bei Doppelungen
+    LIVE.list=kept.filter(c=>!D.some(d=>km(d.lat,d.lon,c.lat,c.lon)<25));
+    LIVE.key=key;
+    if(!LIVE.list.length&&all.length===0)LIVE.err="Live-Suche lieferte keine Treffer (offline?). Es werden nur die kuratierten Ziele gezeigt.";
+  }catch(e){LIVE.err="Live-Suche fehlgeschlagen: "+e.message;LIVE.key=key}
+  LIVE.busy=false;
+  if(vis()[S.step]&&vis()[S.step].id==="res")render();
+}
+async function loadDetails(d){
+  if(DET[d.name]&&DET[d.name].done)return;
+  const det=DET[d.name]=DET[d.name]||{};det.loading=true;
+  const a=A();
+  const job=[];
+  job.push(wikiSearch(`nearcoord:12km,${d.lat},${d.lon} Sehenswürdigkeit OR Schloss OR Museum OR Burg OR Kirche OR Denkmal`,20,{exsentences:"3"}).then(r=>{det.sights=r.filter(x=>x.title!==d.name&&x.title!==d.q).sort((x,y)=>y.pv-x.pv).slice(0,5)}));
+  if(d.tags.includes("wa")||d.tags.includes("ra"))job.push(wikiSearch(`nearcoord:30km,${d.lat},${d.lon} Wanderweg OR Radweg OR Fernwanderweg OR Radfernweg`,15).then(r=>{det.tours=r.sort((x,y)=>y.pv-x.pv).slice(0,4)}));
+  job.push((async()=>{
+    const b=0.04,u=`https://nominatim.openstreetmap.org/search?format=json&limit=6&accept-language=de&q=restaurant&bounded=1&viewbox=${d.lon-b},${d.lat+b},${d.lon+b},${d.lat-b}`;
+    const r=await fetch(u);det.food=(await r.json()).filter(x=>x.name).map(x=>({name:x.name,lat:+x.lat,lon:+x.lon,url:`https://www.openstreetmap.org/${x.osm_type}/${x.osm_id}`}));
+    // Hotels aus OpenStreetMap (Name, Sterne, Webseite). Preise: Schätzung nach Sternen, keine Live-Preise.
+    await new Promise(r=>setTimeout(r,1100));
+    const bb=0.05,hu=`https://nominatim.openstreetmap.org/search?format=json&limit=10&accept-language=de&extratags=1&q=hotel&bounded=1&viewbox=${d.lon-bb},${d.lat+bb},${d.lon+bb},${d.lat-bb}`;
+    const hr=await fetch(hu);
+    det.hotels=(await hr.json()).filter(x=>x.name&&x.class==="tourism").map(x=>{const t=x.extratags||{};return{name:x.name,type:x.type,stars:parseInt(t.stars)||0,web:t.website||t["contact:website"]||"",lat:+x.lat,lon:+x.lon,url:`https://www.openstreetmap.org/${x.osm_type}/${x.osm_id}`}}).sort((x,y)=>y.stars-x.stars).slice(0,6);
+  })());
+  job.push(wikivoyage(d).then(w=>{if(w)det.wv=w}));
+  if(!d.img)job.push((async()=>{ // Foto von Wikimedia Commons aus der Umgebung
+    const r=await fetch(`https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord=${d.lat}|${d.lon}&ggsradius=6000&ggsnamespace=6&ggslimit=15&prop=imageinfo&iiprop=url|mime&iiurlwidth=600`);
+    const p=Object.values(((await r.json()).query||{}).pages||{}).map(x=>x.imageinfo&&x.imageinfo[0]).filter(i=>i&&i.mime==="image/jpeg"&&!BADIMG.test(i.url));
+    if(p.length)det.photo=p[0].thumburl||p[0].url;
+  })());
+  if(a.modes.includes("car"))job.push((async()=>{
+    const r=await fetch(`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${d.lon},${d.lat}?overview=false`);
+    const rt=(await r.json()).routes[0];det.drive={km:rt.distance/1000,h:rt.duration/3600};
+  })());
+  job.push((async()=>{
+    const y=(a.from?new Date(a.from):new Date()).getFullYear()-1, f=a.from?new Date(a.from):new Date(), t=a.to?new Date(a.to):new Date(+f+6*864e5);
+    const ds=x=>`${y}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`;
+    const r=await fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=${d.lat}&longitude=${d.lon}&start_date=${ds(f)}&end_date=${ds(t)}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`);
+    const j=(await r.json()).daily,avg=x=>x.filter(v=>v!=null).reduce((s,v)=>s+v,0)/Math.max(1,x.filter(v=>v!=null).length);
+    det.weather={max:avg(j.temperature_2m_max),min:avg(j.temperature_2m_min),rain:j.precipitation_sum.reduce((s,v)=>s+(v||0),0),year:y};
+  })());
+  await Promise.allSettled(job);
+  det.loading=false;det.done=true;
+  const cur=vis()[S.step]&&vis()[S.step].id;if(cur==="res")updateCard(d.name);else if(cur==="sum"){const y=scrollY;render();scrollTo(0,y)}
+}
+let dq=Promise.resolve();
+function queueDetails(list){list.forEach(d=>{if(!DET[d.name]){DET[d.name]={queued:true};dq=dq.then(()=>loadDetails(d)).then(()=>new Promise(r=>setTimeout(r,1100)))}})}
+
+/* ---------- Karte & Hotels ---------- */
+function mapHtml(x,det){
+  const a=A(),d=x.d,mode=x.tr.m,dest=`${d.lat},${d.lon}`;
+  const gm=`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(a.lat+","+a.lon)}&destination=${dest}&travelmode=${mode==="Bahn"?"transit":"driving"}`;
+  const dr=det.drive?`Route Auto: ${Math.round(det.drive.km)} km, ca. ${hm(det.drive.h)}`:"";
+  const fl=x.tr.fl?flightHtml(x):"";
+  return `${fl}<div class="small" style="margin:6px 0">${dr} <a href="${gm}" target="_blank" rel="noopener">In Google Maps öffnen ↗</a></div>
+  <div class="bigmap" data-bigmap="${esc(d.name)}"><div class="small" style="padding:12px">Karte wird geladen …</div></div>
+  <div class="legend small"><span style="color:#2563eb">●</span> Start <span style="color:#dc2626">●</span> Ziel <span style="color:#f59e0b">●</span> Sehenswertes <span style="color:#7c3aed">●</span> Hotels <span style="color:#16a34a">●</span> Restaurants <span style="color:#db2777">●</span> Wikivoyage-Tipps ${mode==="Bahn"?"· Bahn: Luftlinie, Verbindung siehe Bahn.de":mode==="Flug"?"· Flug: gestrichelte Linie":""}</div>`;
+}
+function flightHtml(x){
+  const f=x.tr.fl,a=A();
+  return `<div class="info" style="margin:8px 0">✈️ <b>Flug ${esc(f.from[1])} (${f.from[0]}) → ${esc(f.to[1])} (${f.to[0]})</b><br>
+   Flugdauer ca. <b>${hm(f.flightH)}</b> (Direktflug, ${Math.round(f.fkm)} km) · Tür zu Tür ca. ${hm(f.doorH)} inkl. Anfahrt, Check-in und Transfer<br>
+   Preisidee: ca. <b>${fmt(f.pp)}</b> pro Person hin &amp; zurück (Schätzung, ${fmt(f.cost)} für die Gruppe). Tatsächliche Flugzeiten und Live-Preise: <a href="${flightLink(x,"g")}" target="_blank" rel="noopener">Google Flights ↗</a>${a.from?` · <a href="${flightLink(x,"s")}" target="_blank" rel="noopener">Skyscanner ↗</a> · <a href="${flightLink(x,"k")}" target="_blank" rel="noopener">Kayak ↗</a>`:""}</div>`;
+}
+function flightLink(x,w){
+  const a=A(),f=x.tr.fl,ci=a.from||"",co=a.to||"",ad=+a.adults||1,kd=+a.kids||0;
+  if(w==="s")return `https://www.skyscanner.de/transport/fluge/${f.from[0].toLowerCase()}/${f.to[0].toLowerCase()}/${ci.slice(2).replace(/-/g,"")}/${co.slice(2).replace(/-/g,"")}/?adultsv2=${ad}&childrenv2=${kd}`;
+  if(w==="k")return `https://www.kayak.de/flights/${f.from[0]}-${f.to[0]}/${ci}/${co}/${ad}adults`;
+  return `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${f.from[0]} to ${f.to[0]}${ci?" on "+ci+" through "+co:""} for ${ad} adults`)}`;
+}
+/* ---------- Interaktive Karte (Leaflet + OpenStreetMap) ---------- */
+let leafP;
+function loadLeaflet(){
+  if(window.L)return Promise.resolve();
+  if(leafP)return leafP;
+  leafP=new Promise((ok,ko)=>{
+    const c=document.createElement("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";document.head.appendChild(c);
+    const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";s.onload=ok;s.onerror=ko;document.head.appendChild(s);
+  });
+  return leafP;
+}
+const MAPS={};
+async function initMap(name){
+  const el=document.querySelector(`[data-bigmap="${CSS.escape(name)}"]`);
+  const x=evaluate().find(r=>r.d.name===name);
+  if(!el||!x||!OPEN.has(name))return;
+  try{await loadLeaflet()}catch(e){el.innerHTML='<div class="small" style="padding:12px">Karte konnte nicht geladen werden (offline?).</div>';return}
+  if(MAPS[name]){try{MAPS[name].remove()}catch(e){}delete MAPS[name]}
+  el.innerHTML="";
+  const a=A(),d=x.d,det=DET[name]=DET[name]||{};
+  const map=L.map(el,{scrollWheelZoom:false}).setView([d.lat,d.lon],9);MAPS[name]=map;
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map);
+  const pts=[[a.lat,a.lon],[d.lat,d.lon]];
+  const dot=(lat,lon,color,html)=>{if(!isFinite(lat)||!isFinite(lon))return;L.circleMarker([lat,lon],{radius:7,color:"#fff",weight:2,fillColor:color,fillOpacity:1}).bindPopup(html).addTo(map);pts.push([lat,lon])};
+  // Route
+  if(x.tr.m==="Auto"){
+    try{
+      if(!det.routeGeo){const r=await (await fetch(`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${d.lon},${d.lat}?overview=full&geometries=geojson`)).json();det.routeGeo=r.routes[0].geometry;if(!det.drive)det.drive={km:r.routes[0].distance/1000,h:r.routes[0].duration/3600}}
+      L.geoJSON(det.routeGeo,{style:{color:"#2563eb",weight:5,opacity:.8}}).addTo(map);
+    }catch(e){L.polyline([[a.lat,a.lon],[d.lat,d.lon]],{color:"#2563eb",dashArray:"6 8"}).addTo(map)}
+  }else if(x.tr.m==="Flug"){
+    const f=x.tr.fl;L.polyline([[a.lat,a.lon],[f.from[2],f.from[3]],[f.to[2],f.to[3]],[d.lat,d.lon]],{color:"#2563eb",weight:3,dashArray:"8 8"}).addTo(map);
+    dot(f.from[2],f.from[3],"#0ea5e9",`✈️ ${esc(f.from[1])} (${f.from[0]})`);dot(f.to[2],f.to[3],"#0ea5e9",`✈️ ${esc(f.to[1])} (${f.to[0]})`);
+  }else L.polyline([[a.lat,a.lon],[d.lat,d.lon]],{color:"#2563eb",weight:3,dashArray:"8 8"}).addTo(map);
+  dot(a.lat,a.lon,"#2563eb",`<b>Start</b>: ${esc(a.homeName)}`);
+  dot(d.lat,d.lon,"#dc2626",`<b>${esc(name)}</b>`);
+  (det.sights||[]).forEach(s=>dot(s.lat,s.lon,"#f59e0b",`<b>${esc(s.title)}</b><br>${esc((s.extract||"").slice(0,140))}…<br><a href="https://de.wikipedia.org/wiki/${encodeURIComponent(s.title.replace(/ /g,"_"))}" target="_blank">Wikipedia</a>`));
+  (det.hotels||[]).forEach(h=>dot(h.lat,h.lon,"#7c3aed",`<b>${esc(h.name)}</b><br>${h.stars?"★".repeat(h.stars):"Hotel"}${h.web?`<br><a href="${h.web}" target="_blank">Webseite</a>`:""}`));
+  (det.food||[]).forEach(f=>dot(f.lat,f.lon,"#16a34a",`<b>${esc(f.name)}</b><br>Restaurant`));
+  if(det.wv)["see","do","buy","eat","sleep"].forEach(k=>det.wv[k].forEach(i=>dot(i.lat,i.lon,"#db2777",`<b>${esc(i.name)}</b><br><span class="small">${WVK[k]}</span><br>${esc(i.desc.slice(0,140))}`)));
+  map.fitBounds(pts,{padding:[24,24],maxZoom:12});
+  setTimeout(()=>map.invalidateSize(),150);
+}
+/* ---------- Wikivoyage ---------- */
+const WVK={see:"Sehenswürdigkeit",do:"Aktivität",buy:"Einkaufen",eat:"Essen",sleep:"Unterkunft"};
+function parseWV(txt){
+  const out={see:[],do:[],buy:[],eat:[],sleep:[]};
+  const map=[[/^Sehensw/i,"see"],[/^Aktivit/i,"do"],[/^Einkaufen/i,"buy"],[/^(Küche|Essen|Restaurant)/i,"eat"],[/^Unterkunft/i,"sleep"]];
+  let sec=null;
+  for(const line of txt.split("\n")){
+    const h=line.match(/^==\s*([^=].*?)\s*==\s*$/);
+    if(h){sec=null;for(const [re,k] of map)if(re.test(h[1]))sec=k;continue}
+    if(!sec||!/^\*\s*\{\{\s*(Marker|vCard|Eintrag|Listing)/i.test(line))continue;
+    const g=k=>{const m=line.match(new RegExp("\\|\\s*"+k+"\\s*=\\s*([^|}]*)"));return m?m[1].trim():""};
+    const name=g("name");if(!name)continue;
+    const after=(line.slice(line.lastIndexOf("}}")+2)||"").replace(/^[\s−–-]+/,"").replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g,"$1").replace(/'''?/g,"").replace(/<[^>]+>/g,"").trim();
+    if(out[sec].length<8)out[sec].push({name,type:g("type"),lat:parseFloat(g("lat")),lon:parseFloat(g("long")||g("lon")),hours:g("hours"),price:g("price"),url:g("url"),desc:(after||g("description")).slice(0,260)});
+  }
+  return out;
+}
+async function wikivoyage(d){
+  const B="https://de.wikivoyage.org/w/api.php?format=json&origin=*&";
+  const q=d.q||d.name;
+  let j=await (await fetch(B+"action=query&redirects=1&titles="+encodeURIComponent(q))).json();
+  let pg=Object.values(j.query.pages)[0],title=pg.title;
+  if("missing" in pg){
+    const g=await (await fetch(B+`action=query&list=geosearch&gscoord=${d.lat}|${d.lon}&gsradius=10000&gslimit=1`)).json();
+    if(!g.query.geosearch.length)return null;title=g.query.geosearch[0].title;
+  }
+  j=await (await fetch(B+"action=query&redirects=1&prop=revisions|extracts&rvprop=content&rvslots=main&exintro=1&explaintext=1&exsentences=6&titles="+encodeURIComponent(title))).json();
+  pg=Object.values(j.query.pages)[0];
+  if(!pg.revisions)return null;
+  const wv=parseWV(pg.revisions[0].slots.main["*"]);
+  wv.title=pg.title;wv.intro=pg.extract||"";wv.url="https://de.wikivoyage.org/wiki/"+encodeURIComponent(pg.title.replace(/ /g,"_"));
+  return wv;
+}
+function wvHtml(det){
+  const w=det.wv;if(!w)return "";
+  const sec=(k,label)=>w[k].length?`<h3 style="font-size:14px;margin:10px 0 4px">${label}</h3>${w[k].slice(0,5).map(i=>`<div class="small" style="margin:3px 0"><b>${i.url?`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.name)}</a>`:esc(i.name)}</b>${i.hours?` · ${esc(i.hours)}`:""}${i.price?` · ${esc(i.price)}`:""}${i.desc?`<br>${esc(i.desc)}`:""}</div>`).join("")}`:"";
+  return `<h3 style="font-size:15px">📖 Reiseführer (Wikivoyage)</h3>${w.intro?`<p class="small" style="margin:4px 0">${esc(w.intro)}</p>`:""}${sec("see","Sehenswürdigkeiten")}${sec("do","Aktivitäten")}${sec("buy","Einkaufen")}${sec("eat","Essen &amp; Trinken")}<p class="small"><a href="${w.url}" target="_blank" rel="noopener">Ganzen Artikel auf Wikivoyage lesen ↗</a> · Quelle: Wikivoyage, CC BY-SA</p>`;
+}function hotelsHtml(x,det,n){
+  const a=A();
+  if(!det.hotels)return "";
+  if(!det.hotels.length)return `<p class="small">Keine Hotels in OpenStreetMap gefunden – nutze die Buchungs-Links.</p>`;
+  const ci=a.from||"",co=a.to||"",f=x.d.pn/100,base={0:85,1:55,2:70,3:95,4:140,5:220};
+  const rooms=Math.max(1,Math.ceil(((+a.adults||1)+(+a.kids||0)*0.5)/2));
+  return `<h3 style="font-size:15px">Hotels vor Ort</h3><table class="cost">${det.hotels.map(h=>{
+    const night=Math.round((base[h.stars]||85)*f/5)*5, tot=night*rooms*n;
+    const bk=`https://www.booking.com/searchresults.de.html?ss=${encodeURIComponent(h.name+" "+(x.d.q||x.d.name))}&group_adults=${+a.adults||1}&group_children=${+a.kids||0}&no_rooms=${rooms}${ci?`&checkin=${ci}&checkout=${co}`:""}`;
+    return `<tr><td>${h.web?`<a href="${h.web}" target="_blank" rel="noopener">${esc(h.name)}</a>`:esc(h.name)} <span class="small">${h.stars?"★".repeat(h.stars):esc(h.type)} · <a href="${bk}" target="_blank" rel="noopener">Preis bei Booking prüfen ↗</a></span></td><td>ca. ${night} €/Nacht<br><span class="small">${tot} € gesamt (Schätzung)</span></td></tr>`}).join("")}</table><p class="small">Hotelnamen stammen aus OpenStreetMap. Die Preise sind Schätzungen nach Sternen und Region – aktuelle Preise nennt nur der Buchungslink.</p>`;
+}
+
+/* ---------- Flughäfen & Flugschätzung ---------- */
+const AIR=[["BER","Berlin BER",52.36,13.50],["HAM","Hamburg",53.63,10.00],["DUS","Düsseldorf",51.29,6.77],["CGN","Köln/Bonn",50.87,7.14],["FRA","Frankfurt",50.03,8.57],["MUC","München",48.35,11.79],["STR","Stuttgart",48.69,9.22],["NUE","Nürnberg",49.50,11.07],["LEJ","Leipzig/Halle",51.42,12.24],["DRS","Dresden",51.13,13.77],["HAJ","Hannover",52.46,9.69],["BRE","Bremen",53.05,8.79],["DTM","Dortmund",51.52,7.61],["FMO","Münster/Osnabrück",52.13,7.68],["PAD","Paderborn",51.61,8.62],["FKB","Karlsruhe/Baden-Baden",48.78,8.08],["FMM","Memmingen",47.99,10.24],["LIS","Lissabon",38.77,-9.13],["OPO","Porto",41.24,-8.68],["FAO","Faro (Algarve)",37.01,-7.97],["MAD","Madrid",40.49,-3.57],["BCN","Barcelona",41.30,2.08],["PMI","Mallorca (Palma)",39.55,2.74],["AGP","Málaga",36.67,-4.50],["ALC","Alicante",38.28,-0.56],["VLC","Valencia",39.49,-0.48],["IBZ","Ibiza",38.87,1.37],["TFS","Teneriffa Süd",28.04,-16.57],["LPA","Gran Canaria",27.93,-15.39],["FCO","Rom",41.80,12.25],["MXP","Mailand",45.63,8.72],["VCE","Venedig",45.51,12.35],["NAP","Neapel",40.88,14.29],["CTA","Catania (Sizilien)",37.47,15.07],["PSA","Pisa (Toskana)",43.68,10.39],["FLR","Florenz",43.81,11.20],["BLQ","Bologna",44.53,11.29],["VRN","Verona (Gardasee)",45.40,10.89],["INN","Innsbruck",47.26,11.34],["SZG","Salzburg",47.79,13.00],["ATH","Athen",37.94,23.94],["HER","Heraklion (Kreta)",35.34,25.18],["CHQ","Chania (Kreta)",35.53,24.15],["RHO","Rhodos",36.41,28.09],["AYT","Antalya",36.90,30.80],["IST","Istanbul",41.26,28.74],["SPU","Split",43.54,16.30],["DBV","Dubrovnik",42.56,18.27],["ZAG","Zagreb",45.74,16.07],["PUY","Pula (Istrien)",44.89,13.92],["VIE","Wien",48.11,16.57],["ZRH","Zürich",47.46,8.55],["GVA","Genf",46.24,6.11],["PRG","Prag",50.10,14.26],["BUD","Budapest",47.44,19.26],["WAW","Warschau",52.17,20.97],["CPH","Kopenhagen",55.62,12.65],["ARN","Stockholm",59.65,17.93],["OSL","Oslo",60.19,11.10],["BGO","Bergen",60.29,5.22],["HEL","Helsinki",60.32,24.96],["KEF","Reykjavík",63.99,-22.61],["DUB","Dublin",53.43,-6.27],["EDI","Edinburgh",55.95,-3.37],["LHR","London Heathrow",51.47,-0.45],["CDG","Paris CDG",49.01,2.55],["AMS","Amsterdam",52.31,4.76],["BRU","Brüssel",50.90,4.48],["MLA","Malta",35.86,14.48],["LCA","Larnaka (Zypern)",34.88,33.63],["NCE","Nizza",43.66,7.22],["MRS","Marseille",43.44,5.22],["SOF","Sofia",42.70,23.41],["TLL","Tallinn",59.41,24.83],["RIX","Riga",56.92,23.97],["FNC","Madeira",32.69,-16.77],["TFN","Teneriffa Nord",28.48,-16.34]];
+function nearestAir(lat,lon,maxKm,pool){const p=pool||AIR;let best=null,bd=1e9;for(const a of p){const d=km(lat,lon,a[2],a[3]);if(d<bd){bd=d;best=a}}return best&&bd<=maxKm?{a:best,d:bd}:null}
+const HUBS=new Set(["BER","HAM","DUS","CGN","FRA","MUC","STR","NUE","LEJ","DRS","HAJ","BRE","DTM","FMO","PAD","FKB","FMM"]);
+function flightInfo(lat,lon,d,adults,kids){
+  const h=nearestAir(lat,lon,180,AIR.filter(x=>HUBS.has(x[0]))),t=nearestAir(d.lat,d.lon,150);
+  if(!h||!t||h.a[0]===t.a[0])return null;
+  const fkm=km(h.a[2],h.a[3],t.a[2],t.a[3]);if(fkm<350)return null;
+  const flightH=0.4+fkm/800;
+  const doorH=flightH+3+(h.d+t.d)*1.25/70;
+  const pp=(40+fkm*0.07);
+  return{from:h.a,to:t.a,fkm,flightH,doorH,pp,cost:(adults+kids*0.75)*pp,d1:h.d,d2:t.d};
+}
+/* ---------- Bewertung & Kosten ---------- */
+function evaluate(){
+  const a=A(),n=nn();
+  const adults=+a.adults||1,kids=+a.kids||0;
+  const wanted=new Set();
+  a.moods.forEach(m=>wanted.add(m));
+  const res=[];
+  for(const d of D.concat(LIVE.list)){
+    const dist=km(a.lat,a.lon,d.lat,d.lon), road=dist*1.25;
+    if(dist<40) continue; // Wohnort selbst ausschließen
+    const modes=[];
+    const carH=road/85, trainH=road/95;
+    if(a.modes.includes("car")&&carH<=maxH()&&dist<=2600) modes.push({m:"Auto",h:carH,cost:road*2*0.15});
+    if(a.modes.includes("train")&&trainH<=maxH()+1&&dist<1500) modes.push({m:"Bahn",h:trainH,cost:(adults+kids*0.5)*road*2*0.16});
+    if(a.modes.includes("flight")&&(!isShort()||type()==="vw"&&dist>500)&&dist>350){ const fl=flightInfo(a.lat,a.lon,d,adults,kids); if(fl) modes.push({m:"Flug",h:fl.doorH,cost:fl.cost+fl.d1*1.25*0.3+fl.d2*1.25*0.3,fl}); }
+    if(!modes.length) continue;
+    modes.sort((x,y)=>x.cost-y.cost);
+    const tr=modes[0];
+    let score=0;
+    const hit=[];
+    for(const t of wanted){ if(d.tags.includes(t)){score+=2;hit.push(t)} }
+    if(a.moods.includes("re")&&a.moods.includes("ku")&&d.tags.includes("re")&&d.tags.includes("ku")) score+=2;
+    for(const r of a.regions){ if(d.tags.includes(r)){score+=2;hit.push(r)} }
+    if((a.moods.length||a.regions.length)&&score===0) continue;
+    // sehr weite Ziele für kurze Reisen abwerten, sehr nahe Ziele für Langurlaub leicht abwerten
+    if(d.live) score+=Math.log10(d.pv+10)*0.8; else score+=1.5;
+    if(isShort()) score-=tr.h*0.3;
+    if(n<=2&&tr.m==="Flug") continue; if(type()==="ta"&&tr.m==="Bahn"&&tr.h>maxH()) continue;
+    if(tr.m==="Flug"&&n<3) continue;
+    const lf={hotel:1,apt:.85,camp:.6,any:.95}[a.lodging]||1, cf={low:.75,mid:1,high:1.4}[a.comfort]||1;
+    const stay=d.pn*lf*cf*(adults+kids*0.5)*(n||0.35);
+    const total=stay+tr.cost;
+    res.push({d,dist,tr,stay,total,score,n,hit});
+  }
+  res.sort((x,y)=>y.score-x.score||x.total-y.total);
+  return res;
+}
+
+/* ---------- Links (alle geprüft: öffnen die jeweilige Suche) ---------- */
+function links(r){
+  const a=A(),d=r.d,name=d.q||d.name,q=encodeURIComponent(name);
+  const ci=a.from||"",co=a.to||"",ad=+a.adults||1,kd=+a.kids||0;
+  const L=[];
+  L.push(["Booking.com",`https://www.booking.com/searchresults.de.html?ss=${q}&group_adults=${ad}&group_children=${kd}&no_rooms=1${ci?`&checkin=${ci}&checkout=${co}`:""}`]);
+  L.push(["Airbnb",`https://www.airbnb.de/s/${q}/homes?adults=${ad}&children=${kd}${ci?`&checkin=${ci}&checkout=${co}`:""}`]);
+  L.push(["Google Hotels",`https://www.google.com/travel/search?q=${encodeURIComponent("Hotels in "+name)}`]);
+  L.push(["Trivago",`https://www.trivago.de/de/srl?search=${q}`]);
+  L.push(["Check24",`https://www.check24.de/hotel/`]);
+  L.push(["Urlaubspiraten",`https://www.urlaubspiraten.de/suche?q=${q}`]);
+  if(r.tr.m==="Flug"){
+    const f=r.tr.fl,fc=f?f.from[0]:"",tc=f?f.to[0]:"";
+    L.push(["Flüge: Google Flights",`https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${fc} to ${tc}${ci?" on "+ci+" through "+co:""} for ${ad} adults`)}`]);
+    if(ci)L.push(["Flüge: Skyscanner",`https://www.skyscanner.de/transport/fluge/${fc.toLowerCase()}/${tc.toLowerCase()}/${ci.slice(2).replace(/-/g,"")}/${co.slice(2).replace(/-/g,"")}/?adultsv2=${ad}&childrenv2=${kd}`]);
+    if(ci)L.push(["Flüge: Kayak",`https://www.kayak.de/flights/${fc}-${tc}/${ci}/${co}/${ad}adults`]);
+  }
+  if(r.tr.m==="Bahn") L.push(["Bahn.de",`https://www.bahn.de/buchung/fahrplan/suche#sts=true&so=${encodeURIComponent(a.homeName)}&zo=${q}${ci?`&hd=${ci}T08:00:00`:""}`]);
+  if(d.tags.includes("wa")||d.tags.includes("ra")) L.push(["Touren (Outdooractive)",`https://www.outdooractive.com/de/search/?q=${q}`]);
+  L.push(["Wikipedia",d.url||`https://de.wikipedia.org/wiki/${encodeURIComponent(name.replace(/ /g,"_"))}`]);
+  L.push(["Sehenswertes (Karte)",`https://www.google.com/maps/search/${encodeURIComponent("Sehenswürdigkeiten "+name)}`]);
+  L.push(["Restaurants (Karte)",`https://www.google.com/maps/search/${encodeURIComponent("Restaurants "+name)}`]);
+  return L;
+}
+/* ---------- Schritte ---------- */
+const STEPS=[
+ {id:"who",t:"Wer & von wo"},
+ {id:"when",t:"Zeitraum"},
+ {id:"budget",t:"Budget"},
+ {id:"travel",t:"Anreise"},
+ {id:"mood",t:"Art des Urlaubs"},
+ {id:"region",t:"Region",show:()=>!isShort()},
+ {id:"stay",t:"Unterkunft",show:()=>type()!=="ta"},
+ {id:"res",t:"Vorschläge"},
+ {id:"sum",t:"Zusammenfassung"}
+];
+const vis=()=>STEPS.filter(s=>!s.show||s.show());
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function render(){
+  const v=vis(); if(S.step>=v.length)S.step=v.length-1;
+  $("#steps").innerHTML=v.map((s,i)=>`<button class="${i===S.step?"cur":i<S.step?"done":""}" data-go="${i}">${i+1}. ${s.t}</button>`).join("");
+  const cur=v[S.step];
+  $("#view").innerHTML=views[cur.id]();
+  bind(cur.id);
+  save();
+  window.scrollTo(0,0);
+}
+function navHtml(last){
+  return `<div class="nav"><button class="btn" data-nav="-1" ${S.step===0?"disabled":""}>← Zurück</button>${last?"":`<button class="btn pri" data-nav="1">Weiter →</button>`}</div><p class="small">Dein Stand wird automatisch im Browser gespeichert – du kannst jederzeit unterbrechen und später weitermachen.</p>`;
+}
+function opts(list,sel,key,multi){
+  return `<div class="opts">${list.map(o=>`<div class="opt ${sel.includes(o[0])?"on":""}" data-k="${key}" data-v="${o[0]}" data-multi="${multi?1:0}"><b>${o[1]}</b>${o[2]?`<span>${o[2]}</span>`:""}</div>`).join("")}</div>`;
+}
+const views={
+ who(){const a=A();return `<div class="card"><h2>Wer fährt mit und von wo?</h2><p class="sub">Damit rechnen wir Entfernung und Kosten.</p>
+ <div class="row"><div><label>Erwachsene</label><input type="number" min="1" id="adults" value="${a.adults}"></div><div><label>Kinder (Kosten ca. 50 %)</label><input type="number" min="0" id="kids" value="${a.kids}"></div></div>
+ <label>Startort</label><div class="row"><select id="home">${Object.keys(HOMES).map(h=>`<option ${h===a.homeName?"selected":""}>${h}</option>`).join("")}<option value="_geo" ${a.homeName==="Mein Standort"?"selected":""}>Mein Standort (GPS)</option>${HOMES[a.homeName]||a.homeName==="Mein Standort"?"":`<option selected>${esc(a.homeName)}</option>`}</select></div>
+ <label>… oder beliebigen Ort suchen</label><div class="row"><input id="homeq" placeholder="z. B. Kiel, Freiburg, Graz"><button class="btn" id="homeGo">Ort suchen</button></div><p class="small" id="homeMsg"></p>
+ ${navHtml()}</div>`},
+ when(){const a=A(),n=nights(),t=autoType();return `<div class="card"><h2>Wann und wie lange?</h2><p class="sub">Aus der Dauer leiten wir die Art der Reise ab (z. B. Fr–So = Wochenende). Noch unklar? Wähle direkt eine Reiseart.</p>
+ <div class="row"><div><label>Anreise</label><input type="date" id="from" value="${a.from}"></div><div><label>Abreise</label><input type="date" id="to" value="${a.to}"></div></div>
+ ${n?`<div class="info">${n} Nächte → erkannt als <b>${TYPES[t]}</b></div>`:t==="ta"?`<div class="info">Gleiches Datum → <b>Tagesausflug</b></div>`:""}
+ <label>Reiseart ${t?"(überschreiben)":""}</label>${opts(Object.entries(TYPES).map(([k,v])=>[k,v]),[a.type||t],"type",false)}
+ ${navHtml()}</div>`},
+ budget(){const a=A();return `<div class="card"><h2>Budget</h2><p class="sub">Gesamtbudget für alle Personen. 0 = egal, wir zeigen nur die Preise.</p>
+ <label>Gesamtbudget (€)</label><input type="number" min="0" step="50" id="budget" value="${a.budget||""}" placeholder="z. B. 1500">${navHtml()}</div>`},
+ travel(){const a=A();const list=[["car","Auto","eigener PKW"],["train","Bahn","Zug"]];if(!isShort()||type()==="vw")list.push(["flight","Flug",isShort()?"nur weite Ziele":"auch Fernziele"]);
+ return `<div class="card"><h2>Wie wollt ihr anreisen?</h2><p class="sub">Mehrfachauswahl. Wir nehmen pro Ziel die günstigste passende Variante.</p>${opts(list,a.modes,"modes",true)}
+ <label>Maximale Fahrzeit einfach: <b id="hv">${maxH()} h</b></label><input type="range" id="maxH" min="1" max="20" value="${maxH()}">
+ ${navHtml()}</div>`},
+ mood(){const a=A(),m=isShort()?MOODS.short:MOODS.long;return `<div class="card"><h2>Was wollt ihr machen?</h2><p class="sub">Passend zu „${TYPES[type()]}“. Mehrfachauswahl möglich (z. B. Relaxen + Sightseeing = Kombi).</p>${opts(m,a.moods,"moods",true)}${navHtml()}</div>`},
+ region(){const a=A();return `<div class="card"><h2>Welche Landschaft / Klima?</h2><p class="sub">Optional – leer lassen heißt: alles ist ok.</p>${opts(REGIONS.map(r=>[r[0],r[1]]),a.regions,"regions",true)}${navHtml()}</div>`},
+ stay(){const a=A();return `<div class="card"><h2>Unterkunft</h2>
+ <h3>Art</h3>${opts([["any","Egal"],["hotel","Hotel"],["apt","Ferienwohnung / Airbnb"],["camp","Camping"]],[a.lodging],"lodging",false)}
+ <h3>Komfort</h3>${opts([["low","Einfach","−25 %"],["mid","Mittel"],["high","Gehoben","+40 %"]],[a.comfort],"comfort",false)}
+ ${navHtml()}</div>`},
+ res(){
+  const a=A(),n=nn();
+  if(LIVE.key!==liveKey()&&!LIVE.busy) setTimeout(discover,0);
+  const r=evaluate();
+  const busy=LIVE.busy||LIVE.key!==liveKey();
+  const head=`<div class="card"><h2>Vorschläge</h2><p class="sub">${TYPES[type()]} · ${n} Nächte · ${a.adults} Erw.${a.kids?` + ${a.kids} Kinder`:""} ab ${esc(a.homeName)}${a.budget?` · Budget ${fmt(a.budget)}`:""}. Preise sind grobe Richtwerte (Unterkunft, Essen, Aktivitäten, Anreise) – Aktuelles findest du über die Links.</p>
+   <div class="notice">⭐ <b>Nicht vergessen:</b> Nur Optionen, die du mit <b>„☆ Merken“</b> markierst, landen in der Zusammenfassung und im PDF-/Markdown-Export. Tippe eine Zeile an, um Details aufzuklappen.</div>
+   <div class="info">${busy?"⏳ Suche live nach passenden Zielen im Internet …":`🌐 ${LIVE.list.length} live gefundene + ${D.length} kuratierte Ziele geprüft.`} ${LIVE.err?`<span class="over">${esc(LIVE.err)}</span>`:""} <button class="btn" data-refresh="1" style="padding:3px 10px">Neu suchen</button> <button class="btn" data-all="1" style="padding:3px 10px">Alle auf-/zuklappen</button></div></div>`;
+  if(!r.length) return head+`<div class="card">${busy?"Bitte kurz warten …":"Keine Treffer. Erhöhe die maximale Fahrzeit, erlaube weitere Verkehrsmittel oder lockere die Auswahl."}${navHtml()}</div>`;
+  const top=r.slice(0,10);
+  queueDetails(top.slice(0,6).map(x=>x.d));
+  return head+top.map((x,i)=>cardHtml(x,i,n)).join("")
+   +`<div class="card">${navHtml()}</div>
+   <div class="stickybar"><span>⭐ <b data-favcount>${S.favs.length}</b> gemerkt</span><button class="btn pri" data-gosum="1">Zur Zusammenfassung →</button></div>`;
+ },
+ sum(){
+  const r=evaluate(),a=A(),n=nn();
+  const picks=S.favs.map(f=>r.find(x=>x.d.name===f)).filter(Boolean);
+  queueDetails(picks.map(x=>x.d));
+  const ex=S.extras.reduce((s,e)=>s+(+e.amt||0),0);
+  return `<div class="card"><h2>Zusammenfassung</h2><p class="sub">Deine gemerkten Ziele. Gebucht wird bewusst extern über die Links.</p>
+  ${picks.length?`<table class="cost">${picks.map(x=>{const det=DET[x.d.name]||{},pic=det.photo||x.d.img;return `<tr><td>${pic?`<img src="${pic}" alt="" style="width:64px;height:44px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-right:8px">`:""}<b>${esc(x.d.name)}</b> <span class="small">${ICON[x.tr.m]} ${hm(timeOf(x))} · ${Math.round(x.dist)} km</span></td><td>${fmt(x.total)}<br><button class="btn" data-fav="${esc(x.d.name)}" style="padding:1px 8px;font-size:12px">entfernen</button></td></tr>`}).join("")}</table>`:"<p>Noch nichts gemerkt – im Schritt „Vorschläge“ auf ☆ Merken tippen.</p>"}
+  <h3>Eigene Zusatzkosten (z. B. Mietwagen, Eintritte)</h3>
+  ${S.extras.map((e,i)=>`<div class="row" style="margin-bottom:6px"><input value="${esc(e.name)}" data-en="${i}"><input type="number" value="${e.amt}" data-ea="${i}"></div>`).join("")}
+  <button class="btn" id="addEx">+ Posten</button>
+  ${picks.length?`<div class="info">Zusatzkosten: ${fmt(ex)}${picks.length===1?` · <b>Gesamt: ${fmt(picks[0].total+ex)}</b>${a.budget?` (Budget ${fmt(a.budget)})`:""}`:""}</div>`:""}
+  <div class="nav"><button class="btn" data-nav="-1">← Zurück</button><span><button class="btn" id="bMd">Markdown</button> <button class="btn pri" id="bPdf">PDF exportieren</button></span></div></div>`;
+ }
+};
+const OPEN=new Set();
+const ICON={Auto:"🚗",Bahn:"🚆",Flug:"✈️"};
+const hm=h=>{const m=Math.round(h*60);return Math.floor(m/60)+":"+String(m%60).padStart(2,"0")+" h"};
+const timeOf=x=>{const d=DET[x.d.name];return x.tr.m==="Auto"&&d&&d.drive?d.drive.h:x.tr.h};
+function mapEmbed(x){
+  const a=A(),d=x.d,dest=`${d.lat},${d.lon}`;
+  return x.tr.m==="Flug"?`https://maps.google.com/maps?q=${dest}&z=6&output=embed`:`https://maps.google.com/maps?saddr=${encodeURIComponent(a.lat+","+a.lon)}&daddr=${dest}&dirflg=${x.tr.m==="Bahn"?"r":"d"}&output=embed`;
+}
+function cardHtml(x,i,n){
+  const name=x.d.name,fav=S.favs.includes(name),b=A().budget,over=b&&x.total>b,open=OPEN.has(name);
+  return `<div class="card dest" data-card="${esc(name)}">
+   <div class="sumrow" data-toggle="${esc(name)}">
+    <div class="mapph"><iframe src="${mapEmbed(x)}" loading="lazy" tabindex="-1" title="Route"></iframe></div>
+    <div class="sumtxt"><h3>${i+1}. ${esc(name)} <span class="small">${x.d.c?`(${x.d.c})`:""}</span></h3>
+     <div class="meta">${ICON[x.tr.m]} <b data-ft>${hm(timeOf(x))}</b> ${x.tr.m} einfach · ${Math.round(x.dist)} km</div>
+     <div>${x.d.tags.map(t=>`<span class="tag">${TAGN[t]}</span>`).join("")}</div>
+     <div class="sumprice">ca. <b class="${b?over?"over":"fine":""}">${fmt(x.total)}</b> gesamt <span class="small">· ${x.d.live?"live gefunden":"kuratiert"}</span></div>
+     <span class="small" data-chev>${open?"▴ Details zuklappen":"▾ Details aufklappen"}</span></div>
+    <button class="btn favb ${fav?"pri":""}" data-fav="${esc(name)}">${fav?"★ Gemerkt":"☆ Merken"}</button>
+   </div>
+   <div class="body" ${open?"":"hidden"}>${bodyHtml(x,i,n)}</div></div>`;
+}
+function bodyHtml(x,i,n){
+  const a=A(),b=a.budget,over=b&&x.total>b,det=DET[x.d.name]||{};
+  const wl=t=>`<a href="https://de.wikipedia.org/wiki/${encodeURIComponent(t.title.replace(/ /g,"_"))}" target="_blank" rel="noopener">${esc(t.title)}</a>`;
+  const sights=x.d.sights.map(esc).join(" · ");
+  const food=det.food&&det.food.length?det.food.map(f=>`<a href="${f.url}" target="_blank" rel="noopener">${esc(f.name)}</a>`).join(" · "):esc(x.d.food||"");
+  const w=det.weather?`${Math.round(det.weather.min)}–${Math.round(det.weather.max)} °C, ${Math.round(det.weather.rain)} mm Regen (Vorjahr ${det.weather.year}, gleicher Zeitraum)`:"";
+  const pic=det.photo||x.d.img;
+  return `${pic?`<img src="${pic}" alt="" loading="lazy" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-bottom:8px">`:""}
+   ${x.d.desc?`<div class="small"><b>${esc(x.d.desc)}</b></div>`:""}
+   ${x.d.extract?`<p class="small" style="margin:6px 0">${esc(x.d.extract)}</p>`:""}
+   <table class="cost"><tr><td>Unterkunft, Essen, Aktivitäten (${nl(n)})</td><td>${fmt(x.stay)}</td></tr><tr><td>Anreise (${x.tr.m}, hin & zurück)</td><td>${fmt(x.tr.cost)}</td></tr><tr class="t"><td>Summe ca.</td><td class="${b?over?"over":"fine":""}">${fmt(x.total)}</td></tr></table>
+   ${mapHtml(x,det)}
+   ${hotelsHtml(x,det,n)}
+   ${wvHtml(det)}
+   ${det.sights&&det.sights.length?`<h3 style="font-size:15px">Sehenswürdigkeiten</h3>${det.sights.map(s=>`<div style="display:flex;gap:10px;margin:8px 0">${s.img?`<img src="${s.img}" alt="" loading="lazy" style="width:84px;height:64px;object-fit:cover;border-radius:8px;flex:none">`:""}<div class="small"><b>${wl(s)}</b> · <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lon}" target="_blank" rel="noopener">Karte</a><br>${esc(s.extract||"")}</div></div>`).join("")}`:""}
+   <div class="small">${det.loading||det.queued&&!det.done?"⏳ Lade Live-Infos … ":""}${!det.sights&&sights?`<b>Sehenswert:</b> ${sights}<br>`:""}${det.tours&&det.tours.length?`<b>Touren/Wege:</b> ${det.tours.map(wl).join(" · ")}<br>`:""}${food?`<b>Essen:</b> ${food}<br>`:""}${w?`<b>Wetter:</b> ${w}`:""}
+   ${det.done?"":`<button class="btn" data-det="${esc(x.d.name)}" style="padding:3px 10px;margin-top:4px">Live-Infos jetzt laden</button>`}</div>
+   <div class="links">${links(x).map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join("")}</div>`;
+}
+function updateCard(name){
+  const el=document.querySelector(`[data-card="${CSS.escape(name)}"]`);if(!el)return;
+  const r=evaluate().slice(0,10),i=r.findIndex(x=>x.d.name===name);if(i<0)return;
+  const n=nn(),x=r[i];
+  el.querySelector(".body").innerHTML=bodyHtml(x,i,n);
+  el.querySelector("[data-ft]").textContent=hm(timeOf(x));
+  bindCard(el);
+  if(OPEN.has(name))initMap(name);
+}
+function bindCard(root){
+  root.querySelectorAll("[data-map]").forEach(b=>b.onclick=()=>{const n=b.dataset.map;DET[n]=DET[n]||{};DET[n].map=!DET[n].map;updateCard(n)});
+  root.querySelectorAll("[data-det]").forEach(b=>b.onclick=()=>{const d=evaluate().map(x=>x.d).find(d=>d.name===b.dataset.det);if(d){delete DET[d.name];b.textContent="Lade …";loadDetails(d)}});
+}
+function toggleFav(n){
+  const i=S.favs.indexOf(n);i<0?S.favs.push(n):S.favs.splice(i,1);save();
+  document.querySelectorAll(`[data-fav="${CSS.escape(n)}"]`).forEach(b=>{const f=S.favs.includes(n);b.classList.toggle("pri",f&&b.classList.contains("favb"));if(b.classList.contains("favb"))b.textContent=f?"★ Gemerkt":"☆ Merken"});
+  document.querySelectorAll("[data-favcount]").forEach(e=>e.textContent=S.favs.length);
+  if(vis()[S.step].id==="sum")render();
+}
+const TAGN={sh:"Shopping",fo:"Kulinarik",fa:"Familie",sk:"Winter",st:"Stadt",na:"Natur",we:"Wellness",wa:"Wandern",ra:"Rad",me:"Meer",be:"Berge",in:"Insel",ku:"Kultur",re:"Relaxen",wm:"warm"};
+
+function bind(id){
+  const v=$("#view");
+  v.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>{S.step+=+b.dataset.nav;render()});
+  v.querySelectorAll(".opt").forEach(o=>o.onclick=()=>{
+    const k=o.dataset.k,val=o.dataset.v,a=A();
+    if(o.dataset.multi==="1"){const i=a[k].indexOf(val);i<0?a[k].push(val):a[k].splice(i,1)}
+    else a[k]=(k==="type"&&a.type===val)?"":val;
+    save();render();
+  });
+  v.querySelectorAll("[data-fav]").forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(b.dataset.fav)});
+  const bindVal=(sel,fn)=>{const e=$(sel);if(e)e.oninput=()=>{fn(e.value);save()}};
+  bindVal("#adults",x=>A().adults=Math.max(1,+x||1));
+  bindVal("#kids",x=>A().kids=Math.max(0,+x||0));
+  bindVal("#budget",x=>A().budget=+x||0);
+  const mh=$("#maxH");if(mh)mh.oninput=()=>{A().maxH=+mh.value;$("#hv").textContent=mh.value+" h";save()};
+  const f=$("#from"),t=$("#to");
+  if(f)f.onchange=()=>{A().from=f.value;if(!A().to||A().to<f.value)A().to=f.value;A().type="";render()};
+  if(t)t.onchange=()=>{A().to=t.value;A().type="";render()};
+  const h=$("#home");if(h)h.onchange=()=>{
+    if(h.value==="_geo"){navigator.geolocation?navigator.geolocation.getCurrentPosition(p=>{Object.assign(A(),{homeName:"Mein Standort",lat:p.coords.latitude,lon:p.coords.longitude});save();render()},()=>{alert("Standort nicht verfügbar.");render()}):alert("Kein GPS verfügbar.")}
+    else if(HOMES[h.value]){const c=HOMES[h.value];Object.assign(A(),{homeName:h.value,lat:c[0],lon:c[1]});save()}
+  };
+  const hg=$("#homeGo");if(hg)hg.onclick=async()=>{
+    const q=$("#homeq").value.trim(),m=$("#homeMsg");if(!q)return;m.textContent="Suche …";
+    try{const j=await (await fetch("https://geocoding-api.open-meteo.com/v1/search?count=1&language=de&name="+encodeURIComponent(q))).json();
+      if(!j.results){m.textContent="Nichts gefunden.";return}
+      const r=j.results[0];Object.assign(A(),{homeName:r.name,lat:r.latitude,lon:r.longitude});save();render();
+    }catch(e){m.textContent="Suche fehlgeschlagen (offline?)."}
+  };
+  v.querySelectorAll("[data-refresh]").forEach(b=>b.onclick=()=>{qcache.clear();LIVE.key="";render()});
+  bindCard(v);
+  v.querySelectorAll("[data-toggle]").forEach(r=>r.onclick=e=>{if(e.target.closest("[data-fav]"))return;const n=r.dataset.toggle,c=r.closest(".card"),bd=c.querySelector(".body");OPEN.has(n)?OPEN.delete(n):OPEN.add(n);bd.hidden=!OPEN.has(n);if(OPEN.has(n))initMap(n);c.querySelector("[data-chev]").textContent=OPEN.has(n)?"▴ Details zuklappen":"▾ Details aufklappen"});
+  v.querySelectorAll("[data-all]").forEach(b=>b.onclick=()=>{const cards=[...v.querySelectorAll("[data-card]")];const open=cards.some(c=>!OPEN.has(c.dataset.card));cards.forEach(c=>{const n=c.dataset.card;open?OPEN.add(n):OPEN.delete(n);c.querySelector(".body").hidden=!open;if(open)initMap(n);c.querySelector("[data-chev]").textContent=open?"▴ Details zuklappen":"▾ Details aufklappen"})});
+  v.querySelectorAll("[data-gosum]").forEach(b=>b.onclick=()=>{S.step=vis().findIndex(s=>s.id==="sum");render()});
+  if(id==="sum"){
+    v.querySelectorAll("[data-en]").forEach(e=>e.oninput=()=>{S.extras[+e.dataset.en].name=e.value;save()});
+    v.querySelectorAll("[data-ea]").forEach(e=>e.onchange=()=>{S.extras[+e.dataset.ea].amt=+e.value||0;render()});
+    $("#addEx").onclick=()=>{S.extras.push({name:"Posten",amt:0});render()};
+    $("#bMd").onclick=()=>download("urlaub.md",markdown(),"text/markdown");
+    $("#bPdf").onclick=e=>exportPdf(e.target);
+  }
+}
+$("#steps").onclick=e=>{const b=e.target.closest("[data-go]");if(b){S.step=+b.dataset.go;render()}};
+
+/* ---------- Export ---------- */
+function summaryData(){
+  const r=evaluate(),a=A(),n=nn();
+  return{r,a,n,picks:S.favs.map(f=>r.find(x=>x.d.name===f)).filter(Boolean),ex:S.extras.reduce((s,e)=>s+(+e.amt||0),0)};
+}
+function detFor(x){const det=DET[x.d.name]||{};return{det,pic:det.photo||x.d.img,sights:(det.sights&&det.sights.length)?det.sights:x.d.sights.map(t=>({title:t,extract:""})),hotels:det.hotels||[],w:det.weather}}
+function markdown(){
+  const {a,n,picks,ex}=summaryData();
+  let m=`# Urlaubsplanung\n\n- Reiseart: ${TYPES[type()]}${a.from?` (${a.from} bis ${a.to}, ${n} Nächte)`:""}\n- Personen: ${a.adults} Erwachsene, ${a.kids} Kinder\n- Start: ${a.homeName}\n- Budget: ${a.budget?fmt(a.budget):"offen"}\n\n`;
+  if(!picks.length)m+="_Noch keine Ziele gemerkt._\n";
+  else m+=`| Ziel | Anreise | Fahrzeit | Summe |\n|---|---|---|---|\n${picks.map(x=>`| ${x.d.name} | ${x.tr.m}, ${Math.round(x.dist)} km | ${hm(timeOf(x))} | ${fmt(x.total)} |`).join("\n")}\n\n`;
+  picks.forEach(x=>{
+    const f=detFor(x);
+    m+=`## ${x.d.name}${x.d.c?` (${x.d.c})`:""}\n${x.d.desc?`_${x.d.desc}_\n\n`:""}${x.d.extract?x.d.extract+"\n\n":""}- Anreise: ${x.tr.m}, ${Math.round(x.dist)} km, ca. ${hm(timeOf(x))}\n- Unterkunft/Essen/Aktivitäten: ${fmt(x.stay)}\n- Anreisekosten: ${fmt(x.tr.cost)}\n- **Summe ca. ${fmt(x.total)}**\n${f.w?`- Wetter (Vorjahr): ${Math.round(f.w.min)}–${Math.round(f.w.max)} °C, ${Math.round(f.w.rain)} mm Regen\n`:""}\n`;
+    if(f.hotels.length)m+=`**Hotels:**\n${f.hotels.map(h=>`- ${h.name}${h.stars?" "+"★".repeat(h.stars):""}${h.web?` – ${h.web}`:""}`).join("\n")}\n\n`;
+    m+=`**Sehenswert:**\n${f.sights.map(s=>`- ${s.title}${s.extract?`: ${s.extract}`:""}`).join("\n")}\n\n**Links:**\n${links(x).map(l=>`- [${l[0]}](${l[1]})`).join("\n")}\n\n`;
+  });
+  if(S.extras.length)m+=`## Zusatzkosten\n${S.extras.map(e=>`- ${e.name}: ${fmt(+e.amt||0)}`).join("\n")}\n\nSumme Zusatz: ${fmt(ex)}\n`;
+  return m;
+}
+const LOGO=`<svg width="54" height="54" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#0a8a84"/><circle cx="40" cy="24" r="9" fill="#fbbf24"/><path d="M6 44 22 26l9 11 9-7 18 14z" fill="#fff"/><path d="M6 46q13-6 26 0t26 0v6q-13 6-26 0T6 52z" fill="#5eead4"/></svg>`;
+function printHtml(){
+  const {a,n,picks,ex}=summaryData();
+  const dt=new Date().toLocaleDateString("de-DE");
+  const sum=picks.reduce((s,x)=>s+x.total,0);
+  let h=`<div class="pr-head">${LOGO}<div><h1>Urlaubsplanung</h1><small>Erstellt am ${dt} mit Urlaubssuche</small></div></div>
+  <div class="pr-meta"><b>${TYPES[type()]}</b>${a.from?` · ${a.from} bis ${a.to} (${n} Nächte)`:""} · ${a.adults} Erwachsene${a.kids?`, ${a.kids} Kinder`:""} · Start: ${esc(a.homeName)} · Budget: ${a.budget?fmt(a.budget):"offen"}</div>`;
+  if(!picks.length)return h+"<p>Noch keine Ziele gemerkt.</p>";
+  h+=`<h3>Übersicht deiner Favoriten</h3><table class="pr-tbl"><tr><th>Ziel</th><th>Anreise</th><th>Fahrzeit</th><th>Summe ca.</th></tr>${picks.map(x=>`<tr><td><b>${esc(x.d.name)}</b></td><td>${ICON[x.tr.m]} ${x.tr.m}, ${Math.round(x.dist)} km</td><td>${hm(timeOf(x))}</td><td>${fmt(x.total)}</td></tr>`).join("")}</table>`;
+  picks.forEach(x=>{
+    const f=detFor(x);
+    h+=`<div class="pr-dest"><h2>${esc(x.d.name)}${x.d.c?` (${x.d.c})`:""}</h2>${x.d.desc?`<div class="sm"><b>${esc(x.d.desc)}</b></div>`:""}
+    ${f.pic?`<img class="ph" src="${f.pic}" alt="">`:""}${x.d.extract?`<p class="sm">${esc(x.d.extract)}</p>`:""}
+    <table class="pr-tbl"><tr><td>Anreise (${x.tr.m}, ${Math.round(x.dist)} km, ca. ${hm(timeOf(x))} einfach)</td><td>${fmt(x.tr.cost)}</td></tr><tr><td>Unterkunft, Essen, Aktivitäten (${n} Nächte)</td><td>${fmt(x.stay)}</td></tr><tr><td><b>Summe ca.</b></td><td><b>${fmt(x.total)}</b></td></tr></table>
+    ${f.w?`<div class="sm">Wetter im gleichen Zeitraum ${f.w.year}: ${Math.round(f.w.min)}–${Math.round(f.w.max)} °C, ${Math.round(f.w.rain)} mm Regen</div>`:""}
+    ${f.hotels.length?`<h3>Hotels (Preise geschätzt, bitte prüfen)</h3><div class="sm">${f.hotels.map(hh=>`${esc(hh.name)}${hh.stars?" "+"★".repeat(hh.stars):""}`).join(" · ")}</div>`:""}
+    <h3>Sehenswert</h3>${f.sights.map(s=>`<div class="sm"><b>${esc(s.title)}</b>${s.extract?` – ${esc(s.extract.length>200?s.extract.slice(0,200)+"…":s.extract)}`:""}</div>`).join("")}
+    ${f.det.food&&f.det.food.length?`<h3>Essen</h3><div class="sm">${f.det.food.map(o=>esc(o.name)).join(" · ")}</div>`:""}
+    <h3>Zum Prüfen &amp; Buchen</h3><div class="sm">${links(x).filter(l=>/Booking|Airbnb|Bahn|Flüge|Urlaubspiraten|Google Maps|Karte/.test(l[0])||true).slice(0,7).map(l=>`<a href="${l[1]}">${l[0]}</a>`).join(" · ")}</div></div>`;
+  });
+  if(S.extras.length)h+=`<h3>Zusatzkosten</h3><table class="pr-tbl">${S.extras.map(e=>`<tr><td>${esc(e.name)}</td><td>${fmt(+e.amt||0)}</td></tr>`).join("")}<tr><td><b>Summe Zusatz</b></td><td><b>${fmt(ex)}</b></td></tr></table>`;
+  if(picks.length===1)h+=`<div class="pr-total">Gesamt ca. ${fmt(sum+ex)}${a.budget?` · Budget ${fmt(a.budget)}`:""}</div>`;
+  h+=`<p class="sm" style="margin-top:14px">Preise sind Richtwerte und Schätzungen, keine Angebote. Buchung erfolgt extern über die genannten Anbieter.</p>`;
+  return h;
+}
+async function exportPdf(btn){
+  btn.textContent="Bereite PDF vor …";btn.disabled=true;
+  await Promise.race([dq,new Promise(r=>setTimeout(r,20000))]);
+  const box=$("#print");box.innerHTML=printHtml();
+  await Promise.race([Promise.all([...box.querySelectorAll("img")].map(i=>i.complete?0:new Promise(r=>{i.onload=i.onerror=r}))),new Promise(r=>setTimeout(r,6000))]);
+  btn.textContent="PDF exportieren";btn.disabled=false;
+  window.print();
+}function download(name,text,type){const b=new Blob([text],{type:type+";charset=utf-8"}),u=URL.createObjectURL(b),l=document.createElement("a");l.href=u;l.download=name;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+
+/* ---------- Kopfleiste ---------- */
+function paintTheme(){const d=document.documentElement.dataset.theme==="dark";$("#bTheme").textContent=d?"☀️ Hell":"🌙 Dunkel"}
+$("#bTheme").onclick=()=>{const n=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=n;try{localStorage.setItem("urlaubssuche.theme",n)}catch(e){}paintTheme()};
+paintTheme();
+$("#bSave").onclick=()=>download("urlaubssuche-stand.json",JSON.stringify(S),"application/json");
+$("#fLoad").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const s=JSON.parse(t);if(!s.a)throw 0;S=Object.assign(fresh(),s,{a:Object.assign(fresh().a,s.a)});render()}catch(x){alert("Datei nicht lesbar.")}})};
+$("#bReset").onclick=()=>{if(confirm("Alle Eingaben löschen und neu starten?")){S=fresh();render()}};
+render();
+</script>
+</body>
+</html>
+
