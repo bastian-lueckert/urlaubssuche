@@ -2,7 +2,10 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.10 – Vorhersage, Teilen, App, Saison, Schon gewesen (aktuell)
+## v0.10.1 – Teilen-Link raeumt die Adresse auf (aktuell)
+**Behoben**
+- Nach dem Oeffnen eines geteilten Links blieb die lange Adresse stehen. Beim naechsten Neuladen haette das den geteilten Stand erneut ueber den eigenen gelegt. Die Adresse wird jetzt zuverlaessig aufgeraeumt, auch wenn der Browser sie beim Laden noch einmal setzt.
+## v0.10 – Vorhersage, Teilen, App, Saison, Schon gewesen
 **Echte Wettervorhersage**
 - Liegt die Reise innerhalb der naechsten 16 Tage, kommt die echte Vorhersage fuer genau deinen Zeitraum (Open-Meteo) statt der Vorjahreswerte. Steht so auch in der Karte ("Vorhersage fuer deinen Reisezeitraum") und in der Begruendung. Bei spaeteren Reisen bleibt es beim Vorjahresvergleich.
 
@@ -200,6 +203,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
