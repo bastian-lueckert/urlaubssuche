@@ -2,7 +2,10 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.8 – Zielmodus, echte Fahrzeiten, Events, Begründung (aktuell)
+## v0.8.1 – Fix Startbildschirm (aktuell)
+**Behoben**
+- Die Auswahl "Ich habe schon ein Ziel" / "Ich brauche Ideen" und die Trefferliste der Zielsuche reagierten nicht auf Klicks, weil ein allgemeiner Handler für Auswahlkarten die Klicks überschrieb. Der Handler gilt jetzt nur noch für Auswahlkarten mit Datenfeld. Mit Klicks getestet: Ziel-Pfad (Suche, Treffer hinzufügen, weiter) und Ideen-Pfad.
+## v0.8 – Zielmodus, echte Fahrzeiten, Events, Begründung
 **Erledigt**
 - Footer mit Version und Deploy-Datum. Vor jedem Release wird das Datum eingetragen.
 - Standarddatum: Start in einer Woche, Ende Start + 2 Tage. Vergangene gespeicherte Daten werden auf diesen Standard zurückgesetzt.
@@ -104,6 +107,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
