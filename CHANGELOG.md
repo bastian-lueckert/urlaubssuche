@@ -2,7 +2,20 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.10.1 – Teilen-Link raeumt die Adresse auf (aktuell)
+## v0.10.2 – Anbieter-Logos in den Listen (aktuell)
+**Neu**
+- Jeder Anbieter-Link zeigt jetzt sein Symbol: Booking, Airbnb, Trivago, Check24, Urlaubspiraten, Google (Hotels, Fluege, Events, Karten), Bahn, Skyscanner, Kayak, Outdooractive, Wikipedia, Wikivoyage, OpenStreetMap, Eventim, Ticketmaster.
+- Auch bei den Hotels ("Preis bei Booking pruefen"), den Flugpreis-Links und dem Wikivoyage-Artikel.
+- Die Symbole kommen vom Icon-Dienst von DuckDuckGo, ermittelt aus der Adresse des Links. Neue Links bekommen ihr Symbol dadurch automatisch. Liefert ein Anbieter keines, erscheint ein neutrales Ersatzsymbol statt einer Luecke.
+- Die Links sind jetzt als Zeile mit Symbol und Text gesetzt und heben sich beim Darueberfahren ab.
+- Der Service Worker speichert die Symbole mit, damit die Liste auch ohne Netz erkennbar bleibt.
+
+**Dabei behoben**
+- Mit verzoegertem Laden ("lazy") blieben die Symbole in aufgeklappten Bereichen leer, weil der Browser sie dort nicht nachlud. Die kleinen Symbole werden jetzt normal geladen; nur die grossen Fotos laden weiterhin verzoegert.
+
+**Geprueft**
+- 136 Symbole auf einer Ergebnisseite, alle geladen, kein Ersatzsymbol noetig; 10 verschiedene Anbieter.
+## v0.10.1 – Teilen-Link raeumt die Adresse auf
 **Behoben**
 - Nach dem Oeffnen eines geteilten Links blieb die lange Adresse stehen. Beim naechsten Neuladen haette das den geteilten Stand erneut ueber den eigenen gelegt. Die Adresse wird jetzt zuverlaessig aufgeraeumt, auch wenn der Browser sie beim Laden noch einmal setzt.
 ## v0.10 – Vorhersage, Teilen, App, Saison, Schon gewesen
@@ -203,6 +216,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
