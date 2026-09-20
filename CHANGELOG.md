@@ -2,7 +2,21 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.6 – GitHub, Tagesausflüge, neue Kategorien, Flüge, interaktive Karte, Wikivoyage (aktuell)
+## v0.7 – Mehr Vielfalt, "Etwas Ausgefallenes", saubere Wikivoyage-Texte (aktuell)
+**Erledigt**
+- Neue Option "Etwas Ausgefallenes": Geheimtipps wie Höhlen, Klammen, Wasserfälle, Baumwipfelpfade, Schaubergwerke, Leuchttürme, Burgruinen, Vulkane und Moore. Bei dieser Option werden weniger bekannte Orte bevorzugt, pro Namenstyp (z. B. "Burg") höchstens zwei.
+- Mehr Vielfalt: 
+  - Die Live-Suche fragt pro Kategorie mehrere Suchbegriffe und zwei Ergebnisseiten ab.
+  - Ziele in unmittelbarer Nähe zueinander (unter 20 km) werden nicht doppelt gezeigt.
+  - Kleine zufällige Streuung im Ranking, dazu die Knöpfe "🔀 Neu mischen", "Neu suchen" (neue Auswahl) und "Mehr Ideen anzeigen" (weitere 10 pro Klick).
+  - Der Knopf "🎲 Überrasch mich" öffnet ein zufälliges Ziel aus den besten 40.
+- 52 neue kuratierte Ziele (Ausgefallenes wie Helgoland, Hallig Hooge, Spreewald, Saarschleife, Externsteine, Eifel-Maare, Hallstatt, Zermatt, Azoren, Cinque Terre, Meteora, dazu Städte, Weinregionen und Inseln in Deutschland und Europa).
+- Wikivoyage-Texte werden von Wiki-Code bereinigt (Vorlagen, Links, Bilder, Formatierung). Der Parser liest jetzt auch mehrzeilige Einträge korrekt, mit Beschreibung, Öffnungszeiten und Preisen. In Tests mit Heidelberg, Lübeck und Prag blieb kein Code-Rest übrig.
+
+**Bekannte Grenzen**
+- Die Live-Auswahl für "Ausgefallenes" hängt von Wikipedia-Stichwörtern ab und enthält gelegentlich Burgen oder Bergwerke, die nicht jeden überraschen.
+- Bei kurzen Reisezeiten (kleiner Radius) gibt es insgesamt weniger Treffer.
+## v0.6 – GitHub, Tagesausflüge, neue Kategorien, Flüge, interaktive Karte, Wikivoyage
 **Erledigt**
 - GitHub: Repository `bastian-lueckert/urlaubssuche`, Online-Version über GitHub Pages (auch vom Smartphone). Jede neue Version wird nach GitHub gepusht, die Versionsstände bleiben lokal unter `versions/`.
 - Tagesausflug als neue Reiseart (gleiches Anreise- und Abreisedatum), ohne Unterkunftsschritt und mit Tageskosten.
@@ -74,6 +88,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
