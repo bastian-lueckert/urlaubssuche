@@ -2,7 +2,38 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.9.4 – Inland oder international (aktuell)
+## v0.10 – Vorhersage, Teilen, App, Saison, Schon gewesen (aktuell)
+**Echte Wettervorhersage**
+- Liegt die Reise innerhalb der naechsten 16 Tage, kommt die echte Vorhersage fuer genau deinen Zeitraum (Open-Meteo) statt der Vorjahreswerte. Steht so auch in der Karte ("Vorhersage fuer deinen Reisezeitraum") und in der Begruendung. Bei spaeteren Reisen bleibt es beim Vorjahresvergleich.
+
+**Link teilen**
+- Neuer Menuepunkt "Link teilen": Der komplette Stand steckt in der Adresse – Eingaben, Reisezeitraum, gemerkte Ziele, eigene Zusatzkosten und besuchte Orte. Wer den Link oeffnet, sieht dieselben Vorschlaege. Der Link ist rund 550 bis 800 Zeichen lang und laesst sich per Knopf kopieren. Nach dem Oeffnen wird die Adresse wieder aufgeraeumt.
+
+**Als App aufs Handy**
+- Die App laesst sich ueber den Browser zum Startbildschirm hinzufuegen: eigenes Symbol, ohne Browserleiste, und sie startet auch ohne Netz mit dem letzten Stand. Neue Fassungen kommen trotzdem sofort an, weil immer zuerst das Netz gefragt wird. Dafuer neu: manifest.webmanifest, sw.js, icon.svg, icon-maskable.svg.
+
+**Schulferien und Saison**
+- Die App prueft ueber openholidays, in welchen Bundeslaendern im Reisezeitraum Schulferien sind, und zeigt eine Ampel: rot fuer Hauptsaison, gelb fuer erhoehte Nachfrage, gruen fuer ruhige Zeit – jeweils mit den betroffenen Bundeslaendern.
+- Die Unterkunftspreise enthalten jetzt einen Saisonaufschlag (25 Prozent in der Hauptsaison, 10 Prozent in der Zwischensaison), sichtbar ausgewiesen. Bei Hauptsaison steht ein Hinweis in der Begruendung. Auch in PDF und Markdown.
+
+**Schon gewesen**
+- In den Details jedes Ziels gibt es "✓ Schon gewesen". Markierte Ziele bekommen ein Abzeichen mit Jahr und rutschen in der Liste deutlich nach hinten (im Test von Rang 3 auf 20).
+- Knopf "Besuchte ausblenden" auf der Ergebnisseite; gemerkte Favoriten bleiben immer sichtbar.
+- Verwaltung ueber das Menue "✓ Schon gewesen": Liste mit Jahr zum Aendern, Eintraege loeschen, Schalter zum dauerhaften Ausblenden.
+- Zuordnung ueber die Lage (Umkreis 25 km), damit auch abweichend benannte Varianten desselben Orts erkannt werden.
+
+**Nebenbei behoben**
+- Ohne gesetzten Startort konnte die Berechnung mit einem Fehler abbrechen; sie liefert jetzt einfach ein leeres Ergebnis.
+
+**Geprueft**
+- Saison: Oktoberferien rot mit 11 Bundeslaendern, August rot mit 16, November gruen.
+- Vorhersage bei einer Reise in 5 Tagen: 12 bis 27 Grad, 0 mm Regen, korrekt als Vorhersage gekennzeichnet.
+- Teilen: Stand kodiert und wieder eingelesen, Startort, Reichweite, Favoriten, Zeitraum und besuchte Orte stimmten ueberein.
+- Schon gewesen: Markieren ueber die Karte, Abzeichen, Ranking, Ausblenden, Favoriten-Ausnahme, Jahr aendern, Loeschen.
+
+**Offen**
+- Preise bleiben Schaetzungen, jetzt mit Saisonaufschlag. Echte Flugpreise waeren der naechste Schritt.
+## v0.9.4 – Inland oder international
 **Neu**
 - Neuer Schritt "Wohin?" nach dem Zeitraum mit drei Moeglichkeiten:
   - **Innerhalb Deutschlands** – nur deutsche Ziele, Flug wird als Verkehrsmittel abgewaehlt und im Anreise-Schritt gar nicht erst angeboten.
@@ -169,6 +200,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
