@@ -2,7 +2,30 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.12 – Schieberegler und Handy-Optimierung (aktuell)
+## v0.13 – Tourenvorschlaege zurueck, fuer alle Ziele (aktuell)
+**Warum sie verschwunden waren**
+- Die Touren wurden nur fuer Ziele mit den Merkmalen Wandern oder Rad geladen und dann als unscheinbare Zeile "Touren/Wege:" ganz unten zwischen Essen und Wetter angezeigt. Bei Staedten, Tagestrips und den meisten Urlaubszielen gab es sie damit gar nicht.
+- Schwerwiegender: Die Suche lief als Umkreissuche. Fernwege wie Rheinsteig, Rheinburgenweg, Rothaarsteig oder der Rheinradweg haben in Wikipedia aber keine Koordinaten, weil sie Linien und keine Punkte sind. Sie wurden deshalb grundsaetzlich herausgefiltert. Uebrig blieben nur zufaellige Ortsartikel, in denen das Wort Wanderweg vorkam.
+
+**Jetzt**
+- Eigener Abschnitt "🥾 Touren & Wege in der Umgebung" in jeder aufgeklappten Karte, bei jedem Ziel: Urlaub, Staedtetrip und Tagestrip.
+- Bis zu sechs Wege mit Symbol fuer Wandern oder Rad, Wikipedia-Link, kurzer Beschreibung, Entfernung falls bekannt und einem Link "Tour suchen" zu Outdooractive.
+- Darunter immer drei allgemeine Links: Wanderungen und Radtouren beim Ziel auf Outdooractive sowie Wanderwege in der Karte.
+- Die Suche laeuft jetzt ueber den Zielnamen statt ueber den Umkreis und laesst Artikel ohne Koordinaten zu. Ergebnis am Mittelrheintal: Rheinhoehenweg, Rheinsteig, Rheinradweg EV15, Rheinburgenweg, Hessischer Radfernweg R3, Wispertalsteig. An der Saarschleife: Mosel-Radweg, Baumkronenpfad, Saar-Radweg, Saar-Hunsrueck-Steig.
+- Sortiert nach Treffergenauigkeit der Suche statt nach Aufrufzahlen, damit die passenden Wege oben stehen.
+- Wege auf anderen Kontinenten werden aussortiert (zuvor tauchte der Appalachian Trail bei Essen auf).
+- Touren werden erst beim Aufklappen geladen, wie der Reisefuehrer. Das spart rund drei Viertel der Abrufe und verhindert, dass Wikipedia die App drosselt.
+- Bei einem fehlgeschlagenen Abruf steht das in der Karte, mit Knopf "Touren erneut laden" statt stiller Leere.
+- Touren stehen jetzt auch im PDF und im Markdown-Export.
+
+**Geprueft**
+- Wanderurlaub ab Koeln: echte Fernwege bei Mittelrheintal, Winterberg und Saarschleife.
+- Staedte-Tagestrip ab Koeln: Essen mit Kaiser-Route und Ruhrhoehenweg, Muenster mit EmsAuenWeg und 100-Schloesser-Route, Bonn mit Rheinhoehenweg.
+- Laden erst beim Aufklappen bestaetigt.
+
+**Bekannte Grenze**
+- Werden viele Karten gleichzeitig aufgeklappt, laden die Touren nacheinander (etwa drei Sekunden je Ziel), und einzelne Abrufe koennen von Wikipedia abgewiesen werden. Dann hilft der Knopf "Touren erneut laden".
+## v0.12 – Schieberegler und Handy-Optimierung
 **Eingaben als Schieberegler**
 - Erwachsene: Regler von 1 bis 4. Darunter ein Knopf "Mehr als 4 Erwachsene?", der ein Eingabefeld bis 40 einblendet; ein zweiter Klick fuehrt zurueck zum Regler.
 - Kinder: genauso, von 0 bis 4 mit demselben Zusatzfeld.
@@ -263,6 +286,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
