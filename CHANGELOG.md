@@ -2,7 +2,12 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.8.1 – Fix Startbildschirm (aktuell)
+## v0.9 – Schlanker Kopf und Favoriten-Pille für Mobilgeräte (aktuell)
+**Erledigt**
+- Kopfzeile: Speichern und Laden liegen jetzt in einem Burger-Menü (☰). Neustart ist ein Symbol (↺), ebenso der Hell/Dunkel-Schalter (🌙/☀️). Auf dem Handy bleibt alles in einer Zeile, der Untertitel wird dort ausgeblendet.
+- Favoriten: Statt der breiten Leiste unten gibt es eine kleine Pille mit Stern und Zahl (⭐ 2) unten rechts. Ein Klick klappt die Liste der gemerkten Ziele mit Fahrzeit und Preis auf, einzelne Ziele lassen sich entfernen, und ein Knopf führt zur Zusammenfassung. Die Pille erscheint nur auf der Ergebnisseite.
+- Getestet: Menü öffnen und schließen, Merken, Liste aufklappen, Entfernen und Sprung zur Zusammenfassung; Ansicht bei Handybreite (375 px) geprüft.
+## v0.8.1 – Fix Startbildschirm
 **Behoben**
 - Die Auswahl "Ich habe schon ein Ziel" / "Ich brauche Ideen" und die Trefferliste der Zielsuche reagierten nicht auf Klicks, weil ein allgemeiner Handler für Auswahlkarten die Klicks überschrieb. Der Handler gilt jetzt nur noch für Auswahlkarten mit Datenfeld. Mit Klicks getestet: Ziel-Pfad (Suche, Treffer hinzufügen, weiter) und Ideen-Pfad.
 ## v0.8 – Zielmodus, echte Fahrzeiten, Events, Begründung
@@ -107,6 +112,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
