@@ -2,7 +2,22 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.9.3 – Grosse Fehlersuche, Pfeil nach oben (aktuell)
+## v0.9.4 – Inland oder international (aktuell)
+**Neu**
+- Neuer Schritt "Wohin?" nach dem Zeitraum mit drei Moeglichkeiten:
+  - **Innerhalb Deutschlands** – nur deutsche Ziele, Flug wird als Verkehrsmittel abgewaehlt und im Anreise-Schritt gar nicht erst angeboten.
+  - **Deutschland & Nachbarlaender** (Voreinstellung) – wie bisher, Ziele im Umkreis ohne Laenderbeschraenkung.
+  - **International, auch weiter weg** – Flug wird automatisch aktiviert, Auslandsziele werden bevorzugt, deutsche Ziele nach hinten gestellt; Suchradius bis 1600 km, und Flug ist auch bei kurzen Reisen erlaubt.
+- Laendererkennung fuer Live-Ziele: zuerst ueber die Wikipedia-Kurzbeschreibung (35 Laender), sonst ueber die Lage.
+- Die Auswahl steht in der Ergebniskopfzeile, in der Begruendung ("Liegt in Deutschland." / "Liegt im Ausland ...") sowie in PDF und Markdown.
+
+**Geprueft**
+- Landeserkennung: Heidelberg DE, Prag CZ, Toskana IT, Mallorca ES, Roermond NL.
+- Innerhalb Deutschlands: 52 Ergebnisse, davon 0 im Ausland (Trier, Heidelberg, Rothenburg, Mittelrheintal, Nuernberg).
+- Deutschland & Nachbarlaender: gemischt, u. a. Strassburg, Luxemburg, Paris.
+- International: 62 Ergebnisse, 32 im Ausland, oben Istrien, Kreta, Antalya, Toskana – alle per Flug.
+- Durchklicken: der Schritt erscheint an der richtigen Stelle, "International" aktiviert den Flug, der Anreise-Schritt zeigt Auto, Bahn und Flug aktiv.
+## v0.9.3 – Grosse Fehlersuche, Pfeil nach oben
 **Beim Durchtesten gefunden und behoben**
 - **Details blieben haengen:** Ein einziger haengender Abruf blockierte die Warteschlange dauerhaft, danach luden bei keinem Ziel mehr Hotels, Sehenswuerdigkeiten oder Wetter. Jetzt hat jeder Abruf ein Zeitlimit (9 bis 15 Sekunden), jedes Ziel bricht nach 30 Sekunden ab, und Fehler stoppen die Warteschlange nicht mehr.
 - **Schlechte Vorschlaege:** In den Top-15 stand kein einziges kuratiertes Reiseziel, stattdessen beliebige mittelgrosse Staedte, weil mehrfach passende Live-Treffer zu stark belohnt wurden. Jetzt zaehlt der erste Treffer voll, jeder weitere weniger; die Beliebtheit ist gedeckelt, kuratierte Ziele haben mehr Gewicht. Aus Koeln erscheinen nun Trier, Heidelberg, Strassburg, Rothenburg, Luxemburg statt Kaiserslautern, Herford, Recklinghausen.
@@ -154,6 +169,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
