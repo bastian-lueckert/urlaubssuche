@@ -2,7 +2,31 @@
 
 `index.html` im Hauptordner ist immer die aktuelle Version. Jede Version liegt zusätzlich unter `versions/vX.Y/index.html`.
 
-## v0.13 – Tourenvorschlaege zurueck, fuer alle Ziele (aktuell)
+## v0.14 – Umgebung entdecken (aktuell)
+**Neuer Einstieg auf der Startseite: "🚶 Umgebung entdecken"**
+- Findet lohnende Ziele direkt vor der Haustuer, die ohne Auto erreichbar sind.
+- Zwei Angaben: zu Fuss (rund 4,5 km/h) oder mit dem Rad (rund 15 km/h) und ein Regler fuer 15 bis 60 Minuten Hinweg. Daraus ergibt sich der Umkreis, von 1,1 km (15 Minuten zu Fuss) bis 15 km (60 Minuten mit dem Rad). Die App zeigt den Umkreis und die Zeit fuer Hin- und Rueckweg an.
+- Optionale Wuensche: Natur & Wald, Wasser, Aussicht, Kultur, Einkehr, Mit Kindern. Ohne Auswahl kommt eine bunte Mischung.
+- Ergebnis: eine Uebersichtskarte mit deinem Standort, allen Zielen und dem Umkreis als Kreis, darunter eine Liste mit Foto oder Sinnbild, Kategorie, Gehzeit beziehungsweise Radzeit, Entfernung und Kurzbeschreibung.
+- Pro Ziel drei Links: Route in Google Maps mit der richtigen Fortbewegungsart, Ort in der Karte und Wikipedia beziehungsweise OpenStreetMap.
+- Die Liste laesst sich als Markdown speichern.
+- Quellen: Wikipedia-Umkreissuche fuer Sehenswertes und Natur, OpenStreetMap fuer Biergaerten, Spielplaetze, Badeseen und Aussichtstuerme passend zur Auswahl.
+- Der Umgebungsmodus blendet alle Urlaubsschritte aus: nur Startseite, "Wie weit?" und das Ergebnis.
+
+**Beim Bauen geloest**
+- In Staedten lieferte die Umkreissuche bei grossem Radius nur die unmittelbare Nachbarschaft, weil Wikipedia je Abfrage nur 50 Treffer nach Entfernung zurueckgibt. Ab 4,5 km fragt die App jetzt zusaetzlich sechs bis acht Punkte im Kreis ab.
+- Erste Ergebnisse enthielten Firmen und Vereine (Fernsehproduktionen, Hilfsorganisationen), weil nur ausgeschlossen statt ausgewaehlt wurde. Jetzt muss ein Ziel zu einer der sechs Arten passen, sonst faellt es raus. Zusaetzlich fliegen Wohnhaeuser, Schulen, Kliniken, Bunker und Veranstaltungsreihen wie Musikfestivals heraus.
+- Ein Filter nach Aufrufzahlen hat fast alles verworfen, weil Wikipedia diese Zahl nur fuer die ersten Eintraege je Abfrage liefert. Er ist entfernt; die Aufrufzahl zaehlt jetzt nur noch als Bonus bei der Sortierung.
+- Hoechstens acht Ziele je Art, damit nicht nur Biergaerten erscheinen.
+
+**Geprueft**
+- Koeln-Ehrenfeld, 30 Minuten zu Fuss: 15 Ziele, darunter Colonius, Blaecherpark, DOMiD, Synagoge Ehrenfeld, Stadtgarten-Biergarten.
+- Bergisch Gladbach, 45 Minuten mit dem Rad, Natur und Aussicht: acht Naturschutzgebiete und Waelder, alle in 18 bis 26 Minuten erreichbar.
+- Kompletter Durchklick einschliesslich Ortssuche, Reglern und Sperre ohne Startort; Uebersichtskarte mit Markierungen.
+
+**Bekannte Grenze**
+- Wird Wikipedia gerade gedrosselt, bleibt die Liste leer und es erscheint ein Hinweis. Ein Klick auf "Neu suchen" hilft.
+## v0.13 – Tourenvorschlaege zurueck, fuer alle Ziele
 **Warum sie verschwunden waren**
 - Die Touren wurden nur fuer Ziele mit den Merkmalen Wandern oder Rad geladen und dann als unscheinbare Zeile "Touren/Wege:" ganz unten zwischen Essen und Wetter angezeigt. Bei Staedten, Tagestrips und den meisten Urlaubszielen gab es sie damit gar nicht.
 - Schwerwiegender: Die Suche lief als Umkreissuche. Fernwege wie Rheinsteig, Rheinburgenweg, Rothaarsteig oder der Rheinradweg haben in Wikipedia aber keine Koordinaten, weil sie Linien und keine Punkte sind. Sie wurden deshalb grundsaetzlich herausgefiltert. Uebrig blieben nur zufaellige Ortsartikel, in denen das Wort Wanderweg vorkam.
@@ -286,6 +310,7 @@
 - Bessere Vorschlagsqualität: Gewichtung der Interessen, Kinderfreundlichkeit, Hund, Barrierefreiheit.
 - Vergleichsansicht für gemerkte Ziele, Tagesplan.
 - Veröffentlichung über GitHub Pages.
+
 
 
 
